@@ -68,11 +68,11 @@ class ReadFiles:
 		'''Predict a file's encoding using cchardet'''
 		# import cchardet as chardet
 		lines = []
-		my_regex = b"^\|9999\|\d+\|"  # descatar informações após a linha que contém |9999| seguido por dígitos ; b'': binary mode
+		my_regex = b"^\|9999\|\d+\|"  # descartar informações após a linha que contém |9999| seguido por dígitos ; b'': binary mode
 		with open(file_path, mode='rb') as filename: # mode 'rb': open the file as binary data
 			for line in filename:
 				match_object = re.search(my_regex, line, flags=re.IGNORECASE)
-				if len(lines) > 2**10 or match_object:
+				if len(lines) > 2**8 or match_object:
 					#print(f'{file_path = } ; {line = }')
 					break
 				lines.append(line)
