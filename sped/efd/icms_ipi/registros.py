@@ -5,10 +5,11 @@ from ...campos import Campo
 from ...campos import CampoData
 from ...campos import CampoFixo
 from ...campos import CampoNumerico
+from ...campos import CampoAlfanumerico
+from ...campos import CampoRegex
 from ...campos import CampoCNPJ
 from ...campos import CampoCPF
 from ...campos import CampoChaveEletronica
-
 
 class Registro0000(Registro):
     """
