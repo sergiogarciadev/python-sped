@@ -841,20 +841,20 @@ class RegistroC165(Registro):
 
 class RegistroC170(Registro):
     """
-    ITENS DO DOCUMENTO
+    ITENS DO DOCUMENTO (CÓDIGO 01, 1B, 04 e 55)
     """
     campos = [
         CampoFixo(1, 'REG', 'C170'),
-        CampoNumerico(2, 'NUM_ITEM'),
-        Campo(3, 'COD_ITEM'),
+        CampoNumerico(2, 'NUM_ITEM', obrigatorio=True),
+        Campo(3, 'COD_ITEM', obrigatorio=True),
         Campo(4, 'DESCR_COMPL'),
         CampoNumerico(5, 'QTD'),
         Campo(6, 'UNID'),
-        CampoNumerico(7, 'VL_ITEM'),
+        CampoNumerico(7, 'VL_ITEM', obrigatorio=True),
         CampoNumerico(8, 'VL_DESC'),
         Campo(9, 'IND_MOV'),
-        Campo(10, 'CST_ICMS'),
-        Campo(11, 'CFOP'),
+        CampoNumerico(10, 'CST_ICMS'),
+        CampoNumerico(11, 'CFOP', obrigatorio=True),
         Campo(12, 'COD_NAT'),
         CampoNumerico(13, 'VL_BC_ICMS'),
         CampoNumerico(14, 'ALIQ_ICMS'),
@@ -868,13 +868,13 @@ class RegistroC170(Registro):
         CampoNumerico(22, 'VL_BC_IPI'),
         CampoNumerico(23, 'ALIQ_IPI'),
         CampoNumerico(24, 'VL_IPI'),
-        Campo(25, 'CST_PIS'),
+        CampoNumerico(25, 'CST_PIS', obrigatorio=True),
         CampoNumerico(26, 'VL_BC_PIS'),
         CampoNumerico(27, 'ALIQ_PIS'),
         CampoNumerico(28, 'QUANT_BC_PIS'),
         CampoNumerico(29, 'ALIQ_PIS'),
         CampoNumerico(30, 'VL_PIS'),
-        Campo(31, 'CST_COFINS'),
+        CampoNumerico(31, 'CST_COFINS', obrigatorio=True),
         CampoNumerico(32, 'VL_BC_COFINS'),
         CampoNumerico(33, 'ALIQ_COFINS'),
         CampoNumerico(34, 'QUANT_BC_COFINS'),
@@ -1737,7 +1737,7 @@ class RegistroD101(Registro):
         CampoFixo(1, 'REG', 'D101'),
         CampoNumerico(2, 'VL_FCP_UF_DEST'),
         CampoNumerico(3, 'VL_ICMS_UF_DEST'),
-        CampoNumerico(3, 'VL_ICMS_UF_REM'),
+        CampoNumerico(4, 'VL_ICMS_UF_REM'),
     ]
 
     nivel = 3

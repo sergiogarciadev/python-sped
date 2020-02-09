@@ -2,12 +2,13 @@
 # -*- coding: utf-8 -*-
 
 Autor = 'Claudio Fernandes de Souza Rodrigues (claudiofsr@yahoo.com)'
-Data  = '06 de Fevereiro de 2020 (início: 10 de Janeiro de 2020)'
+Data  = '09 de Fevereiro de 2020 (início: 10 de Janeiro de 2020)'
 
 import os, csv, re, sys, itertools
 from datetime import datetime
 from time import time, sleep
-from sped.efd.pis_cofins.arquivos import ArquivoDigital
+from sped.efd.pis_cofins.arquivos import ArquivoDigital as ArquivoDigital_PIS_COFINS
+from sped.efd.icms_ipi.arquivos   import ArquivoDigital as ArquivoDigital_ICMS_IPI
 from sped.relatorios.efd_tabelas import EFD_Tabelas
 from sped.campos import CampoCNPJ, CampoCPF, CampoCPFouCNPJ, CampoChaveEletronica
 
@@ -19,7 +20,7 @@ if python_version < (3,6,0):
 	exit()
 
 # Python OOP: Atributos e Métodos (def, funções)
-class EFD_Contrib_Info(ArquivoDigital):
+class SPED_EFD_Info:
 	"""
 	Imprimir informações da SPED EFD Contribuições em um arquivo.csv
 	tal que em uma linha contenha todas as informações suficientes para
@@ -62,7 +63,7 @@ class EFD_Contrib_Info(ArquivoDigital):
 
 	# initialize the attributes of the class
 	
-	def __init__(self, file_path=None, encoding=None, verbose=False):
+	def __init__(self, file_path=None, encoding=None, efd_tipo=None, verbose=False):
 
 		if file_path is None or not os.path.isfile(file_path):
 			raise ValueError(f'O arquivo file_path = {file_path} não é válido!')
@@ -73,6 +74,13 @@ class EFD_Contrib_Info(ArquivoDigital):
 			self.encoding = 'UTF-8'
 		else:
 			self.encoding = encoding
+
+		if efd_tipo is None or re.search('PIS|COFINS|Contrib', efd_tipo, flags=re.IGNORECASE):
+			self.objeto_sped = ArquivoDigital_PIS_COFINS() # instanciar objeto sped_efd
+		elif re.search('ICMS|IPI', efd_tipo, flags=re.IGNORECASE):
+			self.objeto_sped = ArquivoDigital_ICMS_IPI()   # instanciar objeto sped_efd
+		else:
+			raise ValueError(f'efd_tipo = {efd_tipo} inválido!')
 		
 		if not isinstance(verbose, bool):
 			raise ValueError(f'verbose deve ser uma variável boolean (True or False). verbose = {verbose} é inválido!')
@@ -83,8 +91,7 @@ class EFD_Contrib_Info(ArquivoDigital):
 	
 	@property
 	def imprimir_informacoes(self):
-		
-		self.objeto_sped = ArquivoDigital() # instanciar objeto sped_efd			
+				
 		self.objeto_sped.readfile(self.file_path, codificacao=self.encoding, verbose=self.verbose)
 		
 		self.info_do_participante = self.cadastro_do_participante(self.objeto_sped)
@@ -482,21 +489,21 @@ class EFD_Contrib_Info(ArquivoDigital):
 		# adicionar informação de cadastro do participante obtido do Registro 0150
 		# info_do_participante[codigo_do_participante][campo] = descricao
 		codigo_do_participante = dict_info['COD_PART']
-		if codigo_do_participante != '':
+		if codigo_do_participante != '' and self.info_do_participante:
 			for campo in self.info_do_participante[codigo_do_participante]:
 				dict_info[campo] = self.info_do_participante[codigo_do_participante][campo]
 		
 		# adicionar informação de identificação do item obtido do Registro 0200
 		# info_do_item[codigo_do_item][campo] = descricao
 		codigo_do_item = dict_info['COD_ITEM']
-		if codigo_do_item != '':
+		if codigo_do_item != '' and self.info_do_item:
 			for campo in self.info_do_item[codigo_do_item]:
 				dict_info[campo] = self.info_do_item[codigo_do_item][campo]
 		
 		# adicionar informação do plano de contas obtido do Registro 0500
 		codigo_da_conta = dict_info['COD_CTA']
 		# info_da_conta[codigo_da_conta][campo] = descricao
-		if codigo_da_conta != '':
+		if codigo_da_conta != '' and self.info_da_conta:
 			for campo in self.info_da_conta[codigo_da_conta]:
 				val = str(self.info_da_conta[codigo_da_conta][campo])
 				if campo == 'COD_NAT_CC' and re.search('\d{1,2}', val):
@@ -513,7 +520,7 @@ class EFD_Contrib_Info(ArquivoDigital):
 	
 	def imprimir_informacoes_da_efd(self,sped_efd,output_filename):
 		
-		my_regex = "^[ABCDFI]" # Ler apenas os blocos A, B, C, D, F e I.
+		my_regex = "^[ABCDEFI]" # Ler apenas os blocos A, B, C, D, E, F e I.
 		
 		campos_necessarios = ['CST_PIS', 'CST_COFINS', 'VL_BC_PIS', 'VL_BC_COFINS']
 		# Bastam os seguintes campos, desde que os registros de PIS/PASEP ocorram sempre anteriores aos registros de COFINS:
@@ -586,7 +593,11 @@ class EFD_Contrib_Info(ArquivoDigital):
 					
 					for campo in registro.campos:
 						
-						valor = registro.valores[campo.indice]
+						try:
+							valor = registro.valores[campo.indice]
+						except:
+							valor = f'{REG}[{campo.indice}:{campo.nome}] sem valor definido'
+							print(valor)
 						
 						if self.verbose:
 							valor_formatado = __class__.formatar_valor(nome=campo.nome, val=valor)
@@ -662,74 +673,3 @@ class EFD_Contrib_Info(ArquivoDigital):
 						break
 
 		print(f"Gerado o arquivo csv: '{output_filename}'.")
-
-if __name__ == '__main__':
-
-	from efd_read_dir import ReadFiles, Total_Execution_Time
-	
-	dir_path = os.getcwd() # CurrentDirectory
-	extensao = 'txt'
-	
-	lista_de_arquivos = ReadFiles(root_path = dir_path, extension = extensao)
-	
-	#print(f'{lista_de_arquivos.find_all_files = }')
-	
-	arquivos_efd = list(lista_de_arquivos.find_all_efd_contrib) # SPED EFD Contrib:
-	
-	for index,file_path in enumerate(arquivos_efd,1):
-		print( f"{index:>6}: {file_path}")
-		for attribute, value in lista_de_arquivos.get_file_info(file_path).items():
-			print(f'{attribute:>25}: {value}')
-	
-	indice_do_arquivo = None
-	
-	if len(arquivos_efd) > 1:
-		while indice_do_arquivo is None:
-			my_input = input(f"\nFavor, digite o número do arquivo da EFD Contribuições (1 a {len(arquivos_efd)}): ")
-			try:
-				my_input = int(my_input)
-				if 1 <= my_input <= len(arquivos_efd):
-					indice_do_arquivo = my_input - 1
-			except:
-				print(f"-->Opção incorreta: '{my_input}'.")
-				print(f"-->Digite um número inteiro entre 1 e {len(arquivos_efd)}.")
-	elif len(arquivos_efd) == 1:
-		indice_do_arquivo = 0
-	else:
-		dir_path_exemplo = '/home/claudio/Documentos/'
-		print(f"\nA lista de arquivos de SPED Contribuições é obtida a partir de:\n")
-		print(f"\tlista_de_arquivos = ReadFiles(root_path = dir_path, extension = extensao).\n")
-		print(f"tal que:\n")
-		print(f"\tdir_path = '{dir_path}' e extensao = '{extensao}'.\n")
-		print(f"Nenhum arquivo de EFD Contribuções foi encontrado no diretório definido acima.")
-		print(f"Se as EFDs estão localizadas, por exemplo, no diretório '{dir_path_exemplo}',")
-		print(f"então altere a variável 'dir_path' para o diretório que contenha as EFDs:")
-		print(f"\n\tdir_path = '{dir_path_exemplo}'\n")
-		print(f"Outra alternativa é copiar este arquivo '{__file__}' para o diretório que contenha as EFDs.")
-		print(f"Em seguida, executar no terminal:\n")
-		print(f"\t python {__file__} \n")
-		exit()
-
-	# arquivo EFD Contribuições
-	file_path = arquivos_efd[indice_do_arquivo]
-	codif = lista_de_arquivos.informations[file_path]['codificação']
-	
-	print(f"\nFoi selecionado o arquivo {indice_do_arquivo + 1}: '{file_path}'\n")
-	input("Tecle Enter para gerar arquivo .csv com informações da EFD ")
-	print()
-	
-	start = time()
-	
-	efd = EFD_Contrib_Info(file_path, encoding=codif, verbose=False)
-	
-	#print(f'\n efd.basename = {efd.basename}')
-	#print(f'\n efd.colunas = {efd.colunas}')
-	#print(f'\n efd.natureza_da_bc_dos_creditos("1556") = {efd.natureza_da_bc_dos_creditos("1556")}')
-	#print(f'\n efd.formatar_valor("CNPJ","12345678000199") = {efd.formatar_valor("CNPJ","12345678000199")}\n')
-	
-	efd.imprimir_informacoes
-
-	end = time()
-	print(f'\nTotal Execution Time: {Total_Execution_Time(start,end)} \n')
-
-
