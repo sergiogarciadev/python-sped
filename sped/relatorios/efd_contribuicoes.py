@@ -3,8 +3,6 @@
 Autor = 'Claudio Fernandes de Souza Rodrigues (claudiofsr@yahoo.com)'
 Data  = '07 de Fevereiro de 2020 (início: 29 de Janeiro de 2020)'
 
-# Fonte: https://github.com/Trust-Code/python-sped
-
 # Instruções (no Linux):
 
 # Digite em seu web brawser o endereço abaixo:
