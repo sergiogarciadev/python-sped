@@ -59,7 +59,7 @@ class SPED_EFD_Info:
 	# Imprimir as informações desta coluna, nesta ordem
 	colunas = ['Linhas', 'Arquivo da SPED EFD', 'Nº da Linha da EFD', 'CNPJ', 'NOME', 'Mês do Período de Apuração', 'Ano do Período de Apuração', 'Tipo de Operação', 'IND_ORIG_CRED', 'REG', 'CST Código da Situação Tributária', 
 			   'NAT_BC_CRED', 'CFOP', 'COD_PART', *registros_de_cadastro_do_participante, 'CNPJ_CPF_PART', 'Data de Emissão', 'Data de Execução', 'COD_ITEM', *registros_de_identificacao_do_item, 
-			   'Chave Eletrônica', 'COD_MOD', 'NUM_DOC', 'NUM_ITEM', 'COD_CTA', *registros_de_plano_de_contas, 'Valor do Item', 'Valor da Base de Cálculo', 'ALIQ_PIS', 'ALIQ_COFINS']
+			   'Chave Eletrônica', 'COD_MOD', 'NUM_DOC', 'NUM_ITEM', 'COD_CTA', *registros_de_plano_de_contas, 'Valor do Item', 'Valor da Base de Cálculo', 'ALIQ_PIS', 'ALIQ_COFINS', 'CST_ICMS', 'VL_BC_ICMS', 'ALIQ_ICMS']
 
 	# initialize the attributes of the class
 	
@@ -77,8 +77,10 @@ class SPED_EFD_Info:
 
 		if efd_tipo is None or re.search('PIS|COFINS|Contrib', efd_tipo, flags=re.IGNORECASE):
 			self.objeto_sped = ArquivoDigital_PIS_COFINS() # instanciar objeto sped_efd
+			self.efd_tipo = 'efd_contribuicoes'
 		elif re.search('ICMS|IPI', efd_tipo, flags=re.IGNORECASE):
 			self.objeto_sped = ArquivoDigital_ICMS_IPI()   # instanciar objeto sped_efd
+			self.efd_tipo = 'efd_icms_ipi'
 		else:
 			raise ValueError(f'efd_tipo = {efd_tipo} inválido!')
 		
@@ -525,6 +527,9 @@ class SPED_EFD_Info:
 		campos_necessarios = ['CST_PIS', 'CST_COFINS', 'VL_BC_PIS', 'VL_BC_COFINS']
 		# Bastam os seguintes campos, desde que os registros de PIS/PASEP ocorram sempre anteriores aos registros de COFINS:
 		# campos_necessarios = ['CST_COFINS', 'VL_BC_COFINS']
+
+		if self.efd_tipo == 'efd_icms_ipi':
+			campos_necessarios = ['CST_ICMS', 'VL_BC_ICMS']
 		
 		# https://docs.python.org/3/library/csv.html
 		with open(output_filename, 'w', newline='') as csvfile:
