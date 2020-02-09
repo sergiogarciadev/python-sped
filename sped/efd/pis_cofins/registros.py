@@ -2,11 +2,13 @@
 
 from ...campos import Campo
 from ...campos import CampoAlfanumerico
-from ...campos import CampoCNPJ
 from ...campos import CampoData
 from ...campos import CampoFixo
 from ...campos import CampoNumerico
 from ...campos import CampoRegex
+from ...campos import CampoCNPJ
+from ...campos import CampoCPF
+from ...campos import CampoChaveEletronica
 from ...registros import Registro
 
 class Registro0000(Registro):
