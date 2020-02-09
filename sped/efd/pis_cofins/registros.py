@@ -882,7 +882,7 @@ class RegistroC395(Registro):
         CampoNumerico(8, 'VL_DOC', obrigatorio=True),
     ]
     
-    nivel = 4
+    nivel = 3
 
 class RegistroC396(Registro):
     """
@@ -3108,6 +3108,34 @@ class Registro1020(Registro):
         Campo(2, 'NUM_PROC', obrigatorio=True),
         Campo(3, 'IND_NAT_ACAO', obrigatorio=True),
         CampoData(4, 'DT_DEC_ADM', obrigatorio=True),
+    ]
+    
+    nivel = 2
+
+class Registro1050(Registro):
+    """
+    Detalhamento de Ajustes de Base de Cálculo – Valores Extra Apuração
+    """
+    campos = [
+        CampoFixo(1, 'REG', '1050'),
+        CampoData(2, 'DT_REF'),
+        Campo(3, 'IND_AJ_BC'),
+        CampoCNPJ(4, 'CNPJ'),
+        CampoNumerico(5, 'VL_AJ_TOT'),
+        CampoNumerico(6, 'VL_AJ_CST01'),
+        CampoNumerico(7, 'VL_AJ_CST02'),
+        CampoNumerico(8, 'VL_AJ_CST03'),
+        CampoNumerico(9, 'VL_AJ_CST04'),
+        CampoNumerico(10, 'VL_AJ_CST05'),
+        CampoNumerico(11, 'VL_AJ_CST06'),
+        CampoNumerico(12, 'VL_AJ_CST07'),
+        CampoNumerico(13, 'VL_AJ_CST08'),
+        CampoNumerico(14, 'VL_AJ_CST09'),
+        CampoNumerico(15, 'VL_AJ_CST49'),
+        CampoNumerico(16, 'VL_AJ_CST99'),
+        Campo(17, 'IND_APROP'),
+        Campo(18, 'NUM_REC'),
+        Campo(19, 'INFO_COMPL'),
     ]
     
     nivel = 2
