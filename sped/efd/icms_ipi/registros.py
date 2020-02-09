@@ -36,7 +36,6 @@ class Registro0000(Registro):
 
     nivel = 0
 
-
 class Registro0001(Registro):
     """
     ABERTURA DO BLOCO 0
@@ -47,7 +46,6 @@ class Registro0001(Registro):
     ]
 
     nivel = 1
-
 
 class Registro0005(Registro):
     """
@@ -68,7 +66,6 @@ class Registro0005(Registro):
 
     nivel = 2
 
-
 class Registro0015(Registro):
     """
     DADOS DO CONTRIBUINTE SUBSTITUTO
@@ -80,7 +77,6 @@ class Registro0015(Registro):
     ]
 
     nivel = 2
-
 
 class Registro0100(Registro):
     """
@@ -105,7 +101,6 @@ class Registro0100(Registro):
 
     nivel = 2
 
-
 class Registro0150(Registro):
     """
     TABELA DE CADASTRO DO PARTICIPANTE
@@ -128,7 +123,6 @@ class Registro0150(Registro):
 
     nivel = 2
 
-
 class Registro0175(Registro):
     """
     ALTERAÇÃO DA TABELA DE CADASTRO DE PARTICIPANTE
@@ -142,7 +136,6 @@ class Registro0175(Registro):
 
     nivel = 3
 
-
 class Registro0190(Registro):
     """
     IDENTIFICAÇÃO DAS UNIDADES DE MEDIDA
@@ -154,7 +147,6 @@ class Registro0190(Registro):
     ]
 
     nivel = 2
-
 
 class Registro0200(Registro):
     """
@@ -178,7 +170,6 @@ class Registro0200(Registro):
 
     nivel = 2
 
-
 class Registro0205(Registro):
     """
     ALTERAÇÃO DO ITEM
@@ -192,7 +183,6 @@ class Registro0205(Registro):
     ]
 
     nivel = 3
-
 
 class Registro0206(Registro):
     """
@@ -218,7 +208,6 @@ class Registro0210(Registro):
 
     nivel = 3
 
-
 class Registro0220(Registro):
     """
     FATORES DE CONVERSÃO DE UNIDADES
@@ -230,7 +219,6 @@ class Registro0220(Registro):
     ]
 
     nivel = 3
-
 
 class Registro0300(Registro):
     """
@@ -248,7 +236,6 @@ class Registro0300(Registro):
 
     nivel = 2
 
-
 class Registro0305(Registro):
     """
     INFORMAÇÃO SOBRE A UTILIZAÇÃO DO BEM
@@ -262,7 +249,6 @@ class Registro0305(Registro):
 
     nivel = 3
 
-
 class Registro0400(Registro):
     """
     TABELA DE NATUREZA DA OPERAÇÃO/PRESTAÇÃO
@@ -274,7 +260,6 @@ class Registro0400(Registro):
     ]
 
     nivel = 2
-
 
 class Registro0450(Registro):
     """
@@ -288,7 +273,6 @@ class Registro0450(Registro):
 
     nivel = 2
 
-
 class Registro0460(Registro):
     """
     TABELA DE OBSERVAÇÕES DO LANÇAMENTO FISCAL
@@ -300,7 +284,6 @@ class Registro0460(Registro):
     ]
 
     nivel = 2
-
 
 class Registro0500(Registro):
     """
@@ -318,7 +301,6 @@ class Registro0500(Registro):
 
     nivel = 2
 
-
 class Registro0600(Registro):
     """
     CENTRO DE CUSTOS
@@ -332,7 +314,6 @@ class Registro0600(Registro):
 
     nivel = 2
 
-
 class Registro0990(Registro):
     """
     ENCERRAMENTO DO BLOCO 0
@@ -344,7 +325,6 @@ class Registro0990(Registro):
 
     nivel = 1
 
-
 class RegistroB001(Registro):
     """
     ABERTURA DO BLOCO B
@@ -355,7 +335,6 @@ class RegistroB001(Registro):
     ]
 
     nivel = 1
-
 
 class RegistroB020(Registro):
     """
@@ -390,7 +369,6 @@ class RegistroB020(Registro):
 
     nivel = 2
 
-
 class RegistroB025(Registro):
     """
     DETALHAMENTO POR COMBINAÇÃO DE ALÍQUOTA E ITEM DA
@@ -407,7 +385,6 @@ class RegistroB025(Registro):
     ]
 
     nivel = 3
-
 
 class RegistroB030(Registro):
     """
@@ -430,7 +407,6 @@ class RegistroB030(Registro):
 
     nivel = 2
 
-
 class RegistroB035(Registro):
     """
     DETALHAMENTO POR COMBINAÇÃO DE ALÍQUOTA E ITEM DA
@@ -447,7 +423,6 @@ class RegistroB035(Registro):
     ]
 
     nivel = 1
-
 
 class RegistroB350(Registro):
     """
@@ -469,7 +444,6 @@ class RegistroB350(Registro):
 
     nivel = 2
 
-
 class RegistroB420(Registro):
     """
     TOTALIZAÇÃO DOS VALORES DE SERVIÇOS PRESTADOS POR
@@ -487,7 +461,6 @@ class RegistroB420(Registro):
 
     nivel = 2
 
-
 class RegistroB440(Registro):
     """
     TOTALIZAÇÃO DOS VALORES RETIDOS
@@ -502,7 +475,6 @@ class RegistroB440(Registro):
     ]
 
     nivel = 2
-
 
 class RegistroB460(Registro):
     """
@@ -520,7 +492,6 @@ class RegistroB460(Registro):
     ]
 
     nivel = 2
-
 
 class RegistroB470(Registro):
     """
@@ -546,7 +517,6 @@ class RegistroB470(Registro):
 
     nivel = 2
 
-
 class RegistroB500(Registro):
     """
     APURAÇÃO DO ISS SOCIEDADE UNIPROFISSIONA
@@ -559,7 +529,6 @@ class RegistroB500(Registro):
     ]
 
     nivel = 2
-
 
 class RegistroB510(Registro):
     """
@@ -576,7 +545,6 @@ class RegistroB510(Registro):
 
     nivel = 3
 
-
 class RegistroB990(Registro):
     """
     ENCERRAMENTO DO BLOCO B
@@ -588,7 +556,6 @@ class RegistroB990(Registro):
 
     nivel = 1
 
-
 class RegistroC001(Registro):
     """
     ABERTURA DO BLOCO C
@@ -599,7 +566,6 @@ class RegistroC001(Registro):
     ]
 
     nivel = 1
-
 
 class RegistroC100(Registro):
     """
@@ -639,7 +605,6 @@ class RegistroC100(Registro):
 
     nivel = 2
 
-
 class RegistroC101(Registro):
     """
     INFORMAÇÃO COMPLEMENTAR DOS DOCUMENTOS FISCAIS
@@ -655,7 +620,6 @@ class RegistroC101(Registro):
 
     nivel = 3
 
-
 class RegistroC105(Registro):
     """
     OPERAÇÕES COM ICMS ST RECOLHIDO PARA UF DIVERSA DO DESTINATÁRIO DO DOCUMENTO FISCAL (CÓDIGO 55)
@@ -667,7 +631,6 @@ class RegistroC105(Registro):
     ]
 
     nivel = 3
-
 
 class RegistroC110(Registro):
     """
@@ -681,7 +644,6 @@ class RegistroC110(Registro):
 
     nivel = 3
 
-
 class RegistroC111(Registro):
     """
     PROCESSO REFERENCIADO (CÓDIGO 01, 1B, 04 E 55)
@@ -693,7 +655,6 @@ class RegistroC111(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroC112(Registro):
     """
@@ -711,7 +672,6 @@ class RegistroC112(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroC113(Registro):
     """
@@ -731,7 +691,6 @@ class RegistroC113(Registro):
 
     nivel = 4
 
-
 class RegistroC114(Registro):
     """
     CUPOM FISCAL REFERENCIADO (CÓDIGO 01, 1B, 04 E 55)
@@ -746,7 +705,6 @@ class RegistroC114(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroC115(Registro):
     """
@@ -767,7 +725,6 @@ class RegistroC115(Registro):
 
     nivel = 4
 
-
 class RegistroC116(Registro):
     """
     CUPOM FISCAL ELETRÔNICO REFERENCIADO
@@ -783,7 +740,6 @@ class RegistroC116(Registro):
 
     nivel = 4
 
-
 class RegistroC120(Registro):
     """
     OPERAÇÕES DE IMPORTAÇÃO (CÓDIGO 01)
@@ -798,7 +754,6 @@ class RegistroC120(Registro):
     ]
 
     nivel = 3
-
 
 class RegistroC130(Registro):
     """
@@ -817,7 +772,6 @@ class RegistroC130(Registro):
 
     nivel = 3
 
-
 class RegistroC140(Registro):
     """
     FATURA (CÓDIGO 01)
@@ -834,7 +788,6 @@ class RegistroC140(Registro):
 
     nivel = 3
 
-
 class RegistroC141(Registro):
     """
     VENCIMENTO DA FATURA (CÓDIGO 01)
@@ -847,7 +800,6 @@ class RegistroC141(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroC160(Registro):
     """
@@ -864,7 +816,6 @@ class RegistroC160(Registro):
     ]
 
     nivel = 3
-
 
 class RegistroC165(Registro):
     """
@@ -887,7 +838,6 @@ class RegistroC165(Registro):
     ]
 
     nivel = 3
-
 
 class RegistroC170(Registro):
     """
@@ -936,7 +886,6 @@ class RegistroC170(Registro):
 
     nivel = 3
 
-
 class RegistroC171(Registro):
     """
     ARMAZENAMENTO DE COMBUSTÍVEIS (CÓDIGO 01 E 55)
@@ -948,7 +897,6 @@ class RegistroC171(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroC172(Registro):
     """
@@ -962,7 +910,6 @@ class RegistroC172(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroC173(Registro):
     """
@@ -981,7 +928,6 @@ class RegistroC173(Registro):
 
     nivel = 4
 
-
 class RegistroC174(Registro):
     """
     OPERAÇÕES COM ARMAS DE FOGO (CÓDIGO 01)
@@ -994,7 +940,6 @@ class RegistroC174(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroC175(Registro):
     """
@@ -1009,7 +954,6 @@ class RegistroC175(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroC176(Registro):
     """
@@ -1029,7 +973,6 @@ class RegistroC176(Registro):
 
     nivel = 4
 
-
 class RegistroC177(Registro):
     """
     OPERAÇÕES COM PRODUTOS SUJEITOS A SELO DE CONTROLE IPI (CÓDIGO 01)
@@ -1041,7 +984,6 @@ class RegistroC177(Registro):
     ]
     
     nivel = 4
-
 
 class RegistroC178(Registro):
     """
@@ -1055,7 +997,6 @@ class RegistroC178(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroC179(Registro):
     """
@@ -1071,7 +1012,6 @@ class RegistroC179(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroC190(Registro):
     """
@@ -1094,7 +1034,6 @@ class RegistroC190(Registro):
 
     nivel = 3
 
-
 class RegistroC191(Registro):
     """
     DOCUMENTO
@@ -1108,7 +1047,6 @@ class RegistroC191(Registro):
 
     nivel = 4
 
-
 class RegistroC195(Registro):
     """
     OBSERVAÇÕES DO LANÇAMENTO FISCAL (CÓDIGO 01, 1B E 55)
@@ -1120,7 +1058,6 @@ class RegistroC195(Registro):
     ]
 
     nivel = 3
-
 
 class RegistroC197(Registro):
     """
@@ -1138,7 +1075,6 @@ class RegistroC197(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroC300(Registro):
     """
@@ -1160,7 +1096,6 @@ class RegistroC300(Registro):
 
     nivel = 2
 
-
 class RegistroC310(Registro):
     """
     DOCUMENTOS CANCELADOS DE NOTAS FISCAIS DE VENDA A CONSUMIDOR (CÓDIGO 02)
@@ -1171,7 +1106,6 @@ class RegistroC310(Registro):
     ]
 
     nivel = 3
-
 
 class RegistroC320(Registro):
     """
@@ -1191,7 +1125,6 @@ class RegistroC320(Registro):
 
     nivel = 3
 
-
 class RegistroC321(Registro):
     """
     ITENS DO RESUMO DIÁRIO DOS DOCUMENTOS (CÓDIGO 02)
@@ -1210,7 +1143,6 @@ class RegistroC321(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroC350(Registro):
     """
@@ -1232,7 +1164,6 @@ class RegistroC350(Registro):
 
     nivel = 2
 
-
 class RegistroC370(Registro):
     """
     ITENS DO DOCUMENTO (CÓDIGO 02)
@@ -1248,7 +1179,6 @@ class RegistroC370(Registro):
     ]
 
     nivel = 3
-
 
 class RegistroC390(Registro):
     """
@@ -1268,7 +1198,6 @@ class RegistroC390(Registro):
 
     nivel = 3
 
-
 class RegistroC400(Registro):
     """
     EQUIPAMENTO ECF (CÓDIGO 02 E 2D)
@@ -1282,7 +1211,6 @@ class RegistroC400(Registro):
     ]
 
     nivel = 2
-
 
 class RegistroC405(Registro):
     """
@@ -1300,7 +1228,6 @@ class RegistroC405(Registro):
 
     nivel = 3
 
-
 class RegistroC410(Registro):
     """
     PIS E COFINS TOTALIZADOS NO DIA (CÓDIGO 02 E 2D)
@@ -1312,7 +1239,6 @@ class RegistroC410(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroC420(Registro):
     """
@@ -1327,7 +1253,6 @@ class RegistroC420(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroC425(Registro):
     """
@@ -1344,7 +1269,6 @@ class RegistroC425(Registro):
     ]
 
     nivel = 5
-
 
 class RegistroC460(Registro):
     """
@@ -1377,7 +1301,6 @@ class RegistroC465(Registro):
 
     nivel = 5
 
-
 class RegistroC470(Registro):
     """
     ITENS DO DOCUMENTO FISCAL EMITIDO POR ECF (CÓDIGO 02 E 2D)
@@ -1398,7 +1321,6 @@ class RegistroC470(Registro):
 
     nivel = 5
 
-
 class RegistroC490(Registro):
     """
     REGISTRO ANALÍTICO DO MOVIMENTO DIÁRIO (CÓDIGO 02 e 2D)
@@ -1415,7 +1337,6 @@ class RegistroC490(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroC495(Registro):
     """
@@ -1440,7 +1361,6 @@ class RegistroC495(Registro):
     ]
 
     nivel = 2
-
 
 class RegistroC500(Registro):
     """
@@ -1479,7 +1399,6 @@ class RegistroC500(Registro):
 
     nivel = 2
 
-
 class RegistroC510(Registro):
     """
     ITENS DO DOCUMENTO NOTA FISCAL/CONTA ENERGIA ELÉTRICA E NOTA FISCAL/CONTA DE FORNECIMENTO DE GÁS (CÓDIGO 06 E 28)
@@ -1510,7 +1429,6 @@ class RegistroC510(Registro):
 
     nivel = 3
 
-
 class RegistroC590(Registro):
     """
     REGISTRO ANALÍTICO DO DOCUMENTO - NOTA FISCAL/CONTA DE ENERGIA ELÉTRICA E NOTA FISCAL CONSUMO FORNECIMENTO DE GÁS
@@ -1531,7 +1449,6 @@ class RegistroC590(Registro):
     ]
 
     nivel = 3
-
 
 class RegistroC600(Registro):
     """
@@ -1565,7 +1482,6 @@ class RegistroC600(Registro):
 
     nivel = 2
 
-
 class RegistroC601(Registro):
     """
     DOCUMENTOS CANCELADOS - CONSOLIDAÇÃO DIÁRIA DE NOTAS FISCAIS/CONTAS DE ENERGIA ELÉTRICA, NOTA FISCAL/CONTA DE
@@ -1577,7 +1493,6 @@ class RegistroC601(Registro):
     ]
 
     nivel = 3
-
 
 class RegistroC610(Registro):
     """
@@ -1606,7 +1521,6 @@ class RegistroC610(Registro):
 
     nivel = 3
 
-
 class RegistroC690(Registro):
     """
     REGISTRO ANALÍTICO DOS DOCUMENTOS NOTAS FISCAIS/CONTAS DE ENERGIA ELÉTRICA, NOTA FISCAL/CONTA DE FORNECIMENTO D’ÁGUA
@@ -1628,7 +1542,6 @@ class RegistroC690(Registro):
 
     nivel = 3
 
-
 class RegistroC700(Registro):
     """
     CONSOLIDAÇÃO DOS DOCUMENTOS NOTA FISCAL/CONTA ENERGIA ELÉTRICA, EMITIDAS EM VIA ÚNICA (EMPRESAS OBRIGADAS AO
@@ -1646,7 +1559,6 @@ class RegistroC700(Registro):
     ]
 
     nivel = 2
-
 
 class RegistroC790(Registro):
     """
@@ -1668,7 +1580,6 @@ class RegistroC790(Registro):
 
     nivel = 3
 
-
 class RegistroC791(Registro):
     """
     REGISTRO DE INFORMAÇÕES DE ST POR UF
@@ -1681,7 +1592,6 @@ class RegistroC791(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroC800(Registro):
     """
@@ -1709,7 +1619,6 @@ class RegistroC800(Registro):
 
     nivel = 2
 
-
 class RegistroC850(Registro):
     """
     REGISTRO ANALÍTICO DO CF-E (CODIGO 59)
@@ -1727,7 +1636,6 @@ class RegistroC850(Registro):
 
     nivel = 3
 
-
 class RegistroC860(Registro):
     """
     IDENTIFICAÇÃO DO EQUIPAMENTO SAT-CF-E
@@ -1742,7 +1650,6 @@ class RegistroC860(Registro):
     ]
 
     nivel = 2
-
 
 class RegistroC890(Registro):
     """
@@ -1761,7 +1668,6 @@ class RegistroC890(Registro):
 
     nivel = 3
 
-
 class RegistroC990(Registro):
     """
     ENCERRAMENTO DO BLOCO C
@@ -1773,7 +1679,6 @@ class RegistroC990(Registro):
 
     nivel = 1
 
-
 class RegistroD001(Registro):
     """
     ABERTURA DO BLOCO D
@@ -1784,7 +1689,6 @@ class RegistroD001(Registro):
     ]
 
     nivel = 1
-
 
 class RegistroD100(Registro):
     """
@@ -1823,7 +1727,6 @@ class RegistroD100(Registro):
 
     nivel = 2
 
-
 class RegistroD101(Registro):
     """
     INFORMAÇÃO COMPLEMENTAR DOS DOCUMENTOS FISCAIS
@@ -1839,7 +1742,6 @@ class RegistroD101(Registro):
 
     nivel = 3
 
-
 class RegistroD110(Registro):
     """
     ITENS DO DOCUMENTO - NOTA FISCAL DE SERVIÇOS DE TRANSPORTE (CÓDIGO 07)
@@ -1854,7 +1756,6 @@ class RegistroD110(Registro):
 
     nivel = 3
 
-
 class RegistroD120(Registro):
     """
     COMPLEMENTO DA NOTA FISCAL DE SERVIÇOS DE TRANSPORTE (CÓDIGO 07)
@@ -1868,7 +1769,6 @@ class RegistroD120(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroD130(Registro):
     """
@@ -1893,7 +1793,6 @@ class RegistroD130(Registro):
 
     nivel = 3
 
-
 class RegistroD140(Registro):
     """
     COMPLEMENTO DO CONHECIMENTO AQUAVIÁRIO DE CARGAS (CÓDIGO 09)
@@ -1917,7 +1816,6 @@ class RegistroD140(Registro):
 
     nivel = 3
 
-
 class RegistroD150(Registro):
     """
     COMPLEMENTO DO CONHECIMENTO AÉREO (CÓDIGO 10)
@@ -1938,7 +1836,6 @@ class RegistroD150(Registro):
 
     nivel = 3
 
-
 class RegistroD160(Registro):
     """
     CARGA TRANSPORTADA (CÓDIGO 08, 8B, 09, 10, 11, 26 E 27)
@@ -1956,7 +1853,6 @@ class RegistroD160(Registro):
 
     nivel = 3
 
-
 class RegistroD161(Registro):
     """
     LOCAL DA COLETA E ENTREGA (CÓDIGO 08, 8B, 09, 10, 11 E 26)
@@ -1973,7 +1869,6 @@ class RegistroD161(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroD162(Registro):
     """
@@ -1993,7 +1888,6 @@ class RegistroD162(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroD170(Registro):
     """
@@ -2017,7 +1911,6 @@ class RegistroD170(Registro):
     ]
 
     nivel = 3
-
 
 class RegistroD180(Registro):
     """
@@ -2045,7 +1938,6 @@ class RegistroD180(Registro):
 
     nivel = 3
 
-
 class RegistroD190(Registro):
     """
     REGISTRO ANALÍTICO DOS DOCUMENTOS (CÓDIGO 07, 08, 8B, 09, 10, 11, 26, 27 E 57)
@@ -2064,7 +1956,6 @@ class RegistroD190(Registro):
     
     nivel = 3
 
-
 class RegistroD195(Registro):
     """
     OBSERVAÇOES DO LANÇAMENTO FISCAL
@@ -2076,7 +1967,6 @@ class RegistroD195(Registro):
     ]
 
     nivel = 3
-
 
 class RegistroD197(Registro):
     """
@@ -2094,7 +1984,6 @@ class RegistroD197(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroD300(Registro):
     """
@@ -2126,7 +2015,6 @@ class RegistroD300(Registro):
 
     nivel = 2
 
-
 class RegistroD301(Registro):
     """
     DOCUMENTOS CANCELADOS DOS BILHETES DE PASSAGEM RODOVIÁRIO, DE PASSAGEM AQUAVIÁRIO, DE PASSAGEM E NOTA DE BAGAGEM E
@@ -2138,7 +2026,6 @@ class RegistroD301(Registro):
     ]
 
     nivel = 3
-
 
 class RegistroD310(Registro):
     """
@@ -2154,7 +2041,6 @@ class RegistroD310(Registro):
 
     nivel = 3
 
-
 class RegistroD350(Registro):
     """
     EQUIPAMENTO ECF (CÓDIGOS 2E, 13, 14, 15 E 16)
@@ -2168,7 +2054,6 @@ class RegistroD350(Registro):
     ]
 
     nivel = 2
-
 
 class RegistroD355(Registro):
     """
@@ -2186,7 +2071,6 @@ class RegistroD355(Registro):
 
     nivel = 3
 
-
 class RegistroD360(Registro):
     """
     PIS E COFINS TOTALIZADOS NO DIA (CÓDIGOS 2E, 13, 14, 15 E 16)
@@ -2198,7 +2082,6 @@ class RegistroD360(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroD365(Registro):
     """
@@ -2214,7 +2097,6 @@ class RegistroD365(Registro):
 
     nivel = 4
 
-
 class RegistroD370(Registro):
     """
     COMPLEMENTO DOS DOCUMENTOS INFORMADOS (CÓDIGOS 13, 14, 15 E 16 E 2E)
@@ -2229,7 +2111,6 @@ class RegistroD370(Registro):
     ]
 
     nivel = 5
-
 
 class RegistroD390(Registro):
     """
@@ -2250,7 +2131,6 @@ class RegistroD390(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroD400(Registro):
     """
@@ -2277,7 +2157,6 @@ class RegistroD400(Registro):
 
     nivel = 2
 
-
 class RegistroD410(Registro):
     """
     DOCUMENTOS INFORMADOS (CÓDIGOS 13, 14, 15 E 16)
@@ -2302,7 +2181,6 @@ class RegistroD410(Registro):
 
     nivel = 3
 
-
 class RegistroD411(Registro):
     """
     DOCUMENTOS CANCELADOS DOS DOCUMENTOS INFORMADOS (CÓDIGO 13, 14, 15 E 16)
@@ -2313,7 +2191,6 @@ class RegistroD411(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroD420(Registro):
     """
@@ -2328,7 +2205,6 @@ class RegistroD420(Registro):
     ]
 
     nivel = 3
-
 
 class RegistroD500(Registro):
     """
@@ -2363,7 +2239,6 @@ class RegistroD500(Registro):
 
     nivel = 2
 
-
 class RegistroD510(Registro):
     """
     ITENS DO DOCUMENTO - NOTA FISCAL DE SERVIÇO DE COMUNICAÇÃO E SERVIÇO DE TELECOMUNICAÇÃO (CÓDIGO 21 E 22)
@@ -2393,7 +2268,6 @@ class RegistroD510(Registro):
 
     nivel = 3
 
-
 class RegistroD530(Registro):
     """
     TERMINAL FATURADO (CÓDIGO 21 E 22)
@@ -2409,7 +2283,6 @@ class RegistroD530(Registro):
     ]
 
     nivel = 3
-
 
 class RegistroD590(Registro):
     """
@@ -2430,7 +2303,6 @@ class RegistroD590(Registro):
     ]
 
     nivel = 3
-
 
 class RegistroD600(Registro):
     """
@@ -2460,7 +2332,6 @@ class RegistroD600(Registro):
 
     nivel = 2
 
-
 class RegistroD610(Registro):
     """
     ITENS DO DOCUMENTO CONSOLIDADO (CÓDIGO 21 E 22)
@@ -2488,7 +2359,6 @@ class RegistroD610(Registro):
 
     nivel = 3
 
-
 class RegistroD690(Registro):
     """
     REGISTRO ANALÍTICO DOS DOCUMENTOS (CÓDIGO 21 E 22)
@@ -2509,7 +2379,6 @@ class RegistroD690(Registro):
 
     nivel = 3
 
-
 class RegistroD695(Registro):
     """
     CONSOLIDAÇÃO DA PRESTAÇÃO DE SERVIÇOS - NOTAS DE SERVIÇO DE COMUNICAÇÃO E DE SERVIÇO DE TELECOMUNICAÇÃO (CÓDIGO 21
@@ -2527,7 +2396,6 @@ class RegistroD695(Registro):
     ]
 
     nivel = 2
-
 
 class RegistroD696(Registro):
     """
@@ -2549,7 +2417,6 @@ class RegistroD696(Registro):
 
     nivel = 3
 
-
 class RegistroD697(Registro):
     """
     REGISTRO DE INFORMAÇÕES DE OUTRAS UFs, RELATIVAMENTE AOS SERVIÇOS “NÃO-MEDIDOS” DE TELEVISÃO POR ASSINATURA VIA
@@ -2564,7 +2431,6 @@ class RegistroD697(Registro):
 
     nivel = 4
 
-
 class RegistroD990(Registro):
     """
     ENCERRAMENTO DO BLOCO D
@@ -2575,7 +2441,6 @@ class RegistroD990(Registro):
     ]
 
     nivel = 1
-
 
 class RegistroE001(Registro):
     """
@@ -2588,7 +2453,6 @@ class RegistroE001(Registro):
 
     nivel = 1
 
-
 class RegistroE100(Registro):
     """
     PERÍODO DA APURAÇÃO DO ICMS
@@ -2600,7 +2464,6 @@ class RegistroE100(Registro):
     ]
 
     nivel = 2
-
 
 class RegistroE110(Registro):
     """
@@ -2626,7 +2489,6 @@ class RegistroE110(Registro):
 
     nivel = 3
 
-
 class RegistroE111(Registro):
     """
     AJUSTE/BENEFÍCIO/INCENTIVO DA APURAÇÃO DO ICMS
@@ -2639,7 +2501,6 @@ class RegistroE111(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroE112(Registro):
     """
@@ -2655,7 +2516,6 @@ class RegistroE112(Registro):
     ]
 
     nivel = 5
-
 
 class RegistroE113(Registro):
     """
@@ -2675,7 +2535,6 @@ class RegistroE113(Registro):
 
     nivel = 5
 
-
 class RegistroE115(Registro):
     """
     INFORMAÇÕES ADICIONAIS DA APURAÇÃO - VALORES DECLARATÓRIOS
@@ -2688,7 +2547,6 @@ class RegistroE115(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroE116(Registro):
     """
@@ -2709,7 +2567,6 @@ class RegistroE116(Registro):
 
     nivel = 4
 
-
 class RegistroE200(Registro):
     """
     PERÍODO DA APURAÇÃO DO ICMS - SUBSTITUIÇÃO TRIBUTÁRIA
@@ -2722,7 +2579,6 @@ class RegistroE200(Registro):
     ]
     
     nivel = 2
-
 
 class RegistroE210(Registro):
     """
@@ -2748,7 +2604,6 @@ class RegistroE210(Registro):
 
     nivel = 3
 
-
 class RegistroE220(Registro):
     """
     AJUSTE/BENEFÍCIO/INCENTIVO DA APURAÇÃO DO ICMS SUBSTITUIÇÃO TRIBUTÁRIA
@@ -2761,7 +2616,6 @@ class RegistroE220(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroE230(Registro):
     """
@@ -2777,7 +2631,6 @@ class RegistroE230(Registro):
     ]
 
     nivel = 5
-
 
 class RegistroE240(Registro):
     """
@@ -2798,7 +2651,6 @@ class RegistroE240(Registro):
 
     nivel = 5
 
-
 class RegistroE250(Registro):
     """
     OBRIGAÇÕES DO ICMS A RECOLHER - SUBSTITUIÇÃO TRIBUTÁRIA
@@ -2818,7 +2670,6 @@ class RegistroE250(Registro):
 
     nivel = 4
 
-
 class RegistroE300(Registro):
     """
     PERÍODO DE APURAÇÃO DO FUNDO DE COMBATE À POBREZA E
@@ -2832,7 +2683,6 @@ class RegistroE300(Registro):
     ]
 
     nivel = 2
-
 
 class RegistroE310(Registro):
     """
@@ -2867,7 +2717,6 @@ class RegistroE310(Registro):
 
     nivel = 3
 
-
 class RegistroE311(Registro):
     """
     AJUSTE/BENEFÍCIO/INCENTIVO DA APURAÇÃO DO FUNDO DE
@@ -2900,7 +2749,6 @@ class RegistroE312(Registro):
 
     nivel = 5
 
-
 class RegistroE313(Registro):
     """
     INFORMAÇÕES ADICIONAIS DOS AJUSTES DA APURAÇÃO DO
@@ -2921,7 +2769,6 @@ class RegistroE313(Registro):
     ]
 
     nivel = 5
-
 
 class RegistroE316(Registro):
     """
@@ -2944,7 +2791,6 @@ class RegistroE316(Registro):
 
     nivel = 4
 
-
 class RegistroE500(Registro):
     """
     PERÍODO DE APURAÇÃO DO IPI
@@ -2957,7 +2803,6 @@ class RegistroE500(Registro):
     ]
 
     nivel = 2
-
 
 class RegistroE510(Registro):
     """
@@ -2973,7 +2818,6 @@ class RegistroE510(Registro):
     ]
 
     nivel = 3
-
 
 class RegistroE520(Registro):
     """
@@ -2992,7 +2836,6 @@ class RegistroE520(Registro):
 
     nivel = 3
 
-
 class RegistroE530(Registro):
     """
     AJUSTES DA APURAÇÃO DO IPI
@@ -3008,7 +2851,6 @@ class RegistroE530(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroE531(Registro):
     """
@@ -3030,7 +2872,6 @@ class RegistroE531(Registro):
 
     nivel = 5
 
-
 class RegistroE990(Registro):
     """
     ENCERRAMENTO DO BLOCO E
@@ -3042,7 +2883,6 @@ class RegistroE990(Registro):
 
     nivel = 1
 
-
 class RegistroG001(Registro):
     """
     ABERTURA DO BLOCO G
@@ -3053,7 +2893,6 @@ class RegistroG001(Registro):
     ]
 
     nivel = 1
-
 
 class RegistroG110(Registro):
     """
@@ -3074,7 +2913,6 @@ class RegistroG110(Registro):
 
     nivel = 2
 
-
 class RegistroG125(Registro):
     """
     MOVIMENTAÇÃO DE BEM OU COMPONENTE DO ATIVO IMOBILIZADO
@@ -3094,7 +2932,6 @@ class RegistroG125(Registro):
 
     nivel = 3
 
-
 class RegistroG126(Registro):
     """
     OUTROS CRÉDITOS CIAP
@@ -3113,7 +2950,6 @@ class RegistroG126(Registro):
 
     nivel = 4
 
-
 class RegistroG130(Registro):
     """
     IDENTIFICAÇÃO DO DOCUMENTO FISCAL
@@ -3131,7 +2967,6 @@ class RegistroG130(Registro):
 
     nivel = 4
 
-
 class RegistroG140(Registro):
     """
     IDENTIFICAÇÃO DO ITEM DO DOCUMENTO FISCAL
@@ -3144,7 +2979,6 @@ class RegistroG140(Registro):
 
     nivel = 5
 
-
 class RegistroG990(Registro):
     """
     ENCERRAMENTO DO BLOCO G
@@ -3156,7 +2990,6 @@ class RegistroG990(Registro):
 
     nivel = 1
 
-
 class RegistroH001(Registro):
     """
     ABERTURA DO BLOCO H
@@ -3167,7 +3000,6 @@ class RegistroH001(Registro):
     ]
 
     nivel = 1
-
 
 class RegistroH005(Registro):
     """
@@ -3181,7 +3013,6 @@ class RegistroH005(Registro):
     ]
 
     nivel = 2
-
 
 class RegistroH010(Registro):
     """
@@ -3203,7 +3034,6 @@ class RegistroH010(Registro):
 
     nivel = 3
 
-
 class RegistroH020(Registro):
     """
     INFORMAÇÃO COMPLEMENTAR DO INVENTÁRIO
@@ -3217,7 +3047,6 @@ class RegistroH020(Registro):
 
     nivel = 4
 
-
 class RegistroH990(Registro):
     """
     ENCERRAMENTO DO BLOCO H
@@ -3228,7 +3057,6 @@ class RegistroH990(Registro):
     ]
 
     nivel = 1
-
 
 class RegistroK001(Registro):
     """
@@ -3241,7 +3069,6 @@ class RegistroK001(Registro):
 
     nivel = 1
 
-
 class RegistroK100(Registro):
     """
     PERÍODO DE APURAÇÃO DO ICMS/IPI
@@ -3253,7 +3080,6 @@ class RegistroK100(Registro):
     ]
 
     nivel = 2
-
 
 class RegistroK200(Registro):
     """
@@ -3270,7 +3096,6 @@ class RegistroK200(Registro):
 
     nivel = 3
 
-
 class RegistroK210(Registro):
     """
     DESMONTAGEM DE MERCADORIAS – ITEM DE ORIGE
@@ -3286,7 +3111,6 @@ class RegistroK210(Registro):
 
     nivel = 3
 
-
 class RegistroK215(Registro):
     """
     DESMONTAGEM DE MERCADORIAS – ITENS DE DESTINO
@@ -3298,7 +3122,6 @@ class RegistroK215(Registro):
     ]
 
     nivel = 4
-
 
 class RegistroK220(Registro):
     """
@@ -3313,7 +3136,6 @@ class RegistroK220(Registro):
     ]
 
     nivel = 3
-
 
 class RegistroK230(Registro):
     """
@@ -3330,7 +3152,6 @@ class RegistroK230(Registro):
 
     nivel = 3
 
-
 class RegistroK235(Registro):
     """
     INSUMOS CONSUMIDOS
@@ -3345,7 +3166,6 @@ class RegistroK235(Registro):
 
     nivel = 4
 
-
 class RegistroK250(Registro):
     """
     INDUSTRIALIZAÇÃO EFETUADA POR TERCEIROS – ITENS PRODUZIDOS
@@ -3358,7 +3178,6 @@ class RegistroK250(Registro):
     ]
 
     nivel = 3
-
 
 class RegistroK255(Registro):
     """
@@ -3374,127 +3193,159 @@ class RegistroK255(Registro):
 
     nivel = 4
 
-
 class RegistroK260(Registro):
     """
-    Texto
+    REPROCESSAMENTO/REPARO DE PRODUTO/INSUMO
     """
     campos = [
         CampoFixo(1, 'REG', 'K260'),
+        Campo(2, 'OD_OP_OS'),
+        Campo(3, 'COD_ITEM'),
+        CampoData(4, 'DT_SAIDA'),
+        Campo(5, 'QTD_SAIDA'),
+        CampoData(6, 'DT_RET'),
+        Campo(7, 'QTD_RET'),
     ]
 
     nivel = 3
-
 
 class RegistroK265(Registro):
     """
-    Texto
+    REPROCESSAMENTO/REPARO – MERCADORIAS CONSUMIDAS E/OU
+    RETORNADAS
     """
     campos = [
         CampoFixo(1, 'REG', 'K265'),
+        Campo(2, 'COD_ITEM'),
+        Campo(3, 'QTD_CONS'),
+        Campo(4, 'QTD_RET'),
     ]
 
     nivel = 4
-
 
 class RegistroK270(Registro):
     """
-    Texto
+    CORREÇÃO DE APONTAMENTO DOS REGISTROS K210, K220, K230,
+    K250, K260, K291, K292, K301 E K302
     """
     campos = [
         CampoFixo(1, 'REG', 'K270'),
+        CampoData(2, 'DT_INI_AP'),
+        CampoData(3, 'DT_FIN_AP'),
+        Campo(4, 'COD_OP_OS'),
+        Campo(5, 'COD_ITEM'),
+        Campo(6, 'QTD_COR_POS'),
+        Campo(7, 'QTD_COR_NEG'),
+        Campo(8, 'ORIGEM'),
     ]
 
     nivel = 3
-
 
 class RegistroK275(Registro):
     """
-    Texto
+    CORREÇÃO DE APONTAMENTO E RETORNO DE INSUMOS DOS
+    REGISTROS K215, K220, K235, K255 E K265.
     """
     campos = [
         CampoFixo(1, 'REG', 'K275'),
+        Campo(2, 'COD_ITEM'),
+        Campo(3, 'QTD_COR_POS'),
+        Campo(4, 'QTD_COR_NEG'),
+        Campo(5, 'COD_INS_SUBST'),
     ]
 
     nivel = 4
-
 
 class RegistroK280(Registro):
     """
-    Texto
+    CORREÇÃO DE APONTAMENTO – ESTOQUE ESCRITURADO
     """
     campos = [
         CampoFixo(1, 'REG', 'K280'),
+        CampoData(2, 'DT_EST'),
+        Campo(3, 'COD_ITEM'),
+        Campo(4, 'QTD_COR_POS'),
+        Campo(5, 'QTD_COR_NEG'),
+        Campo(6, 'IND_EST'),
+        Campo(7, 'COD_PART'),
     ]
 
     nivel = 3
-
 
 class RegistroK290(Registro):
     """
-    Texto
+    PRODUÇÃO CONJUNTA – ORDEM DE PRODUÇÃO
     """
     campos = [
         CampoFixo(1, 'REG', 'K290'),
+        CampoData(2, 'DT_INI_OP'),
+        CampoData(3, 'DT_FIN_OP'),
+        Campo(4, 'COD_DOC_OP'),
     ]
 
     nivel = 3
-
 
 class RegistroK291(Registro):
     """
-    Texto
+    PRODUÇÃO CONJUNTA – ITENS PRODUZIDOS
     """
     campos = [
         CampoFixo(1, 'REG', 'K291'),
+        Campo(2, 'COD_ITEM'),
+        Campo(3, 'QTD'),
     ]
 
     nivel = 4
-
 
 class RegistroK292(Registro):
     """
-    Texto
+    PRODUÇÃO CONJUNTA – INSUMOS CONSUMIDOS
     """
     campos = [
         CampoFixo(1, 'REG', 'K292'),
+        Campo(2, 'COD_ITEM'),
+        Campo(3, 'QTD'),
     ]
 
     nivel = 4
 
-
 class RegistroK300(Registro):
     """
-    Texto
+    PRODUÇÃO CONJUNTA – INDUSTRIALIZAÇÃO EFETUADA POR
+    TERCEIROS
     """
     campos = [
         CampoFixo(1, 'REG', 'K300'),
+        CampoData(2, 'DT_PROD'),
     ]
 
     nivel = 3
 
-
 class RegistroK301(Registro):
     """
-    Texto
+    PRODUÇÃO CONJUNTA – INDUSTRIALIZAÇÃO EFETUADA POR
+    TERCEIROS – ITENS PRODUZIDOS
     """
     campos = [
         CampoFixo(1, 'REG', 'K301'),
+        Campo(2, 'COD_ITEM'),
+        Campo(3, 'QTD'),
     ]
 
     nivel = 4
-
 
 class RegistroK302(Registro):
     """
-    Texto
+    PRODUÇÃO CONJUNTA – INDUSTRIALIZAÇÃO EFETUADA POR
+    TERCEIROS – INSUMOS CONSUMIDOS
     """
     campos = [
         CampoFixo(1, 'REG', 'K302'),
+        Campo(2, 'COD_ITEM'),
+        Campo(3, 'QTD'),
     ]
 
     nivel = 4
-
 
 class RegistroK990(Registro):
     """
@@ -3507,7 +3358,6 @@ class RegistroK990(Registro):
 
     nivel = 1
 
-
 class Registro1001(Registro):
     """
     ABERTURA DO BLOCO 1
@@ -3518,7 +3368,6 @@ class Registro1001(Registro):
     ]
 
     nivel = 1
-
 
 class Registro1010(Registro):
     """
@@ -3542,7 +3391,6 @@ class Registro1010(Registro):
 
     nivel = 2
 
-
 class Registro1100(Registro):
     """
     REGISTRO DE INFORMAÇÕES SOBRE EXPORTAÇÃO
@@ -3564,7 +3412,6 @@ class Registro1100(Registro):
 
     nivel = 2
 
-
 class Registro1105(Registro):
     """
     DOCUMENTOS FISCAIS DE EXPORTAÇÃO
@@ -3580,7 +3427,6 @@ class Registro1105(Registro):
     ]
 
     nivel = 3
-
 
 class Registro1110(Registro):
     """
@@ -3601,7 +3447,6 @@ class Registro1110(Registro):
 
     nivel = 4
 
-
 class Registro1200(Registro):
     """
     CONTROLE DE CRÉDITOS FISCAIS - ICMS
@@ -3618,7 +3463,6 @@ class Registro1200(Registro):
 
     nivel = 2
 
-
 class Registro1210(Registro):
     """
     UTILIZAÇÃO DE CRÉDITOS FISCAIS - ICMS
@@ -3630,7 +3474,6 @@ class Registro1210(Registro):
     ]
 
     nivel = 3
-
 
 class Registro1300(Registro):
     """
@@ -3652,7 +3495,6 @@ class Registro1300(Registro):
 
     nivel = 2
 
-
 class Registro1310(Registro):
     """
     MOVIMENTAÇÃO DIÁRIA DE COMBUSTÍVEIS POR TANQUE
@@ -3671,7 +3513,6 @@ class Registro1310(Registro):
     ]
 
     nivel = 3
-
 
 class Registro1320(Registro):
     """
@@ -3693,7 +3534,6 @@ class Registro1320(Registro):
 
     nivel = 4
 
-
 class Registro1350(Registro):
     """
     BOMBAS
@@ -3708,7 +3548,6 @@ class Registro1350(Registro):
 
     nivel = 2
 
-
 class Registro1360(Registro):
     """
     LACRES DA BOMBA
@@ -3720,7 +3559,6 @@ class Registro1360(Registro):
     ]
 
     nivel = 3
-
 
 class Registro1370(Registro):
     """
@@ -3735,7 +3573,6 @@ class Registro1370(Registro):
 
     nivel = 3
 
-
 class Registro1390(Registro):
     """
     CONTROLE DE PRODUÇÃO DE USINA
@@ -3746,7 +3583,6 @@ class Registro1390(Registro):
     ]
 
     nivel = 2
-
 
 class Registro1391(Registro):
     """
@@ -3774,7 +3610,6 @@ class Registro1391(Registro):
 
     nivel = 3
 
-
 class Registro1400(Registro):
     """
     INFORMAÇÃO SOBRE VALORES AGREGADOS
@@ -3787,7 +3622,6 @@ class Registro1400(Registro):
     ]
 
     nivel = 2
-
 
 class Registro1500(Registro):
     """
@@ -3825,7 +3659,6 @@ class Registro1500(Registro):
 
     nivel = 2
 
-
 class Registro1510(Registro):
     """
     ITENS DO DOCUMENTO NOTA FISCAL/CONTA ENERGIA ELÉTRICA (CÓDIGO 06)
@@ -3856,7 +3689,6 @@ class Registro1510(Registro):
 
     nivel = 3
 
-
 class Registro1600(Registro):
     """
     TOTAL DAS OPERAÇÕES COM CARTÃO DE CRÉDITO E/OU DÉBITO
@@ -3869,7 +3701,6 @@ class Registro1600(Registro):
     ]
 
     nivel = 2
-
 
 class Registro1700(Registro):
     """
@@ -3888,7 +3719,6 @@ class Registro1700(Registro):
 
     nivel = 2
 
-
 class Registro1710(Registro):
     """
     DOCUMENTOS FISCAIS CANCELADOS/INUTILIZADOS
@@ -3900,7 +3730,6 @@ class Registro1710(Registro):
     ]
 
     nivel = 3
-
 
 class Registro1800(Registro):
     """
@@ -3921,7 +3750,6 @@ class Registro1800(Registro):
 
     nivel = 2
 
-
 class Registro1900(Registro):
     """
     INDICADOR DE SUB-APURAÇÃO DO ICMS
@@ -3934,7 +3762,6 @@ class Registro1900(Registro):
 
     nivel = 2
 
-
 class Registro1910(Registro):
     """
     PERÍODO DA SUB-APURAÇÃO DO ICMS
@@ -3946,7 +3773,6 @@ class Registro1910(Registro):
     ]
 
     nivel = 3
-
 
 class Registro1920(Registro):
     """
@@ -3970,7 +3796,6 @@ class Registro1920(Registro):
 
     nivel = 4
 
-
 class Registro1921(Registro):
     """
     AJUSTE/BENEFÍCIO/INCENTIVO DA SUB-APURAÇÃO DO ICMS
@@ -3982,7 +3807,6 @@ class Registro1921(Registro):
     ]
 
     nivel = 5
-
 
 class Registro1922(Registro):
     """
@@ -3998,7 +3822,6 @@ class Registro1922(Registro):
     ]
 
     nivel = 6
-
 
 class Registro1923(Registro):
     """
@@ -4018,7 +3841,6 @@ class Registro1923(Registro):
 
     nivel = 6
 
-
 class Registro1925(Registro):
     """
     INFORMAÇÕES ADICIONAIS DA SUB-APURAÇÃO - VALORES DECLARATÓRIOS
@@ -4031,7 +3853,6 @@ class Registro1925(Registro):
     ]
 
     nivel = 5
-
 
 class Registro1926(Registro):
     """
@@ -4051,7 +3872,6 @@ class Registro1926(Registro):
     ]
 
     nivel = 5
-
 
 class Registro1960(Registro):
     """
@@ -4076,7 +3896,6 @@ class Registro1960(Registro):
 
     nivel = 2
 
-
 class Registro1970(Registro):
     """
     GIAF 3 - GUIA DE INFORMAÇÃO E APURAÇÃO DE INCENTIVOS
@@ -4100,7 +3919,6 @@ class Registro1970(Registro):
 
     nivel = 2
 
-
 class Registro1975(Registro):
     """
     GIAF 3 - GUIA DE INFORMAÇÃO E APURAÇÃO DE INCENTIVOS
@@ -4116,7 +3934,6 @@ class Registro1975(Registro):
     ]
 
     nivel = 3
-
 
 class Registro1980(Registro):
     """
@@ -4142,7 +3959,6 @@ class Registro1980(Registro):
 
     nivel = 2
 
-
 class Registro1990(Registro):
     """
     ENCERRAMENTO DO BLOCO 1
@@ -4154,7 +3970,6 @@ class Registro1990(Registro):
 
     nivel = 1
 
-
 class Registro9001(Registro):
     """
     ABERTURA DO BLOCO 9
@@ -4165,7 +3980,6 @@ class Registro9001(Registro):
     ]
 
     nivel = 1
-
 
 class Registro9900(Registro):
     """
@@ -4179,7 +3993,6 @@ class Registro9900(Registro):
 
     nivel = 2
 
-
 class Registro9990(Registro):
     """
     ENCERRAMENTO DO BLOCO 9
@@ -4190,7 +4003,6 @@ class Registro9990(Registro):
     ]
 
     nivel = 1
-
 
 class Registro9999(Registro):
     """
