@@ -51,7 +51,7 @@ if __name__ == '__main__':
 	
 	if len(arquivos_sped_efd) > 1:
 		while indice_do_arquivo is None:
-			my_input = input(f"\nFavor, digite o número do arquivo da EFD Contribuições (1 a {len(arquivos_sped_efd)}): ")
+			my_input = input(f"\nFavor, digite o número do arquivo SPED EFD (1 a {len(arquivos_sped_efd)}): ")
 			try:
 				my_input = int(my_input)
 				if 1 <= my_input <= len(arquivos_sped_efd):
@@ -63,11 +63,11 @@ if __name__ == '__main__':
 		indice_do_arquivo = 0
 	else:
 		dir_path_exemplo = '/home/claudio/Documentos/'
-		print(f"\nA lista de arquivos de SPED Contribuições é obtida a partir de:\n")
+		print(f"\nA lista de arquivos de SPED EFD é obtida a partir de:\n")
 		print(f"\tlista_de_arquivos = ReadFiles(root_path = dir_path, extension = extensao).\n")
 		print(f"tal que:\n")
 		print(f"\tdir_path = '{dir_path}' e extensao = '{extensao}'.\n")
-		print(f"Nenhum arquivo de EFD Contribuções foi encontrado no diretório definido acima.")
+		print(f"Nenhum arquivo de SPED EFD foi encontrado no diretório definido acima.")
 		print(f"Se as EFDs estão localizadas, por exemplo, no diretório '{dir_path_exemplo}',")
 		print(f"então altere a variável 'dir_path' para o diretório que contenha as EFDs:")
 		print(f"\n\tdir_path = '{dir_path_exemplo}'\n")
