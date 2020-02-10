@@ -18,9 +18,11 @@ class ArquivoDigital(object):
         self._registro_encerramento = self.registro_encerramento()
         self._blocos = OrderedDict()
 
-    def readfile(self, filename, codificacao='utf-8', verbose=None):
+    def readfile(self, filename, codificacao=None, verbose=None):
         sucesso = False
-        with open(filename, 'r', encoding=codificacao) as spedfile: # encoding='utf-8', 'latin-1'
+        if codificacao is None: # encoding='utf-8', 'latin-1', ...
+            codificacao = 'utf-8'
+        with open(filename, 'r', encoding=codificacao) as spedfile:
             for line in [line.strip() for line in spedfile]:
                 # a simple way to remove multiple spaces in a string
                 line = re.sub('\s{2,}', ' ', line)
@@ -28,7 +30,7 @@ class ArquivoDigital(object):
                 # Por exemplo, o registro 'c491' deve ser corrigido para 'C491'.
                 line = line[:6].upper() + line[6:] # line = '|c491|...' --> '|C491|...'
                 regt = self.read_registro(line)
-                # Verificar se foi lido o arquivo SPED até a última linha válida que contém o registro '9999'.
+                # Verificar se o arquivo SPED foi lido até a última linha válida que contém o registro '9999'.
                 if regt.__class__ == self.__class__.registro_encerramento:
                     sucesso = True
                     break
@@ -50,19 +52,19 @@ class ArquivoDigital(object):
         bloco = self._blocos[bloco_id]
 
         if registro.__class__ == self.__class__.registro_abertura:
-			# Atualizar o registro de abertura 0000
+			# Atualizar o registro de abertura 0000 do SPED
             self._registro_abertura = registro
         elif registro.__class__ == self.__class__.registro_encerramento:
-			# Atualizar o registro de encerramento 9999
+			# Atualizar o registro de encerramento 9999 do SPED
             self._registro_encerramento = registro
         elif registro.__class__ == bloco.registro_abertura.__class__:
-			# Atualizar os registros de abertura: 0001, A001, C001, ...
+			# Atualizar os registros de abertura dos blocos: 0001, A001, C001, ...
             bloco.registro_abertura = registro           
         elif registro.__class__ == bloco.registro_encerramento.__class__:
-			# Atualizar os registros de encerramento: 0990, A990, C990, ...
+			# Atualizar os registros de encerramento dos blocos: 0990, A990, C990, ...
             bloco.registro_encerramento = registro
         else:
-			# Adicionar novos registros a cada linha obtida de filename
+			# Adicionar informações dos registros a cada linha obtida de filename
             bloco.add(registro)
 
         return registro
