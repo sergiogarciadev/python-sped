@@ -522,7 +522,7 @@ class SPED_EFD_Info:
 	
 	def imprimir_informacoes_da_efd(self,sped_efd,output_filename):
 		
-		my_regex = "^[ABCDEFI]" # Ler apenas os blocos A, B, C, D, E, F e I.
+		my_regex = "^[A-Z]" # Ler os blocos da A a Z.
 		
 		campos_necessarios = ['CST_PIS', 'CST_COFINS', 'VL_BC_PIS', 'VL_BC_COFINS']
 		# Bastam os seguintes campos, desde que os registros de PIS/PASEP ocorram sempre anteriores aos registros de COFINS:
