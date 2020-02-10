@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 Autor = 'Claudio Fernandes de Souza Rodrigues (claudiofsr@yahoo.com)'
-Data  = '09 de Fevereiro de 2020 (início: 29 de Janeiro de 2020)'
+Data  = '10 de Fevereiro de 2020 (início: 29 de Janeiro de 2020)'
 
 # Instruções (no Linux):
 
@@ -21,7 +21,7 @@ Data  = '09 de Fevereiro de 2020 (início: 29 de Janeiro de 2020)'
 import sys, os
 from time import time, sleep
 from sped.relatorios.efd_read_dir import ReadFiles, Total_Execution_Time
-from sped.relatorios.efd_print_info import SPED_EFD_Info
+from sped.relatorios.efd_info import SPED_EFD_Info
 
 # Versão mínima exigida: python 3.6.0
 python_version = sys.version_info
