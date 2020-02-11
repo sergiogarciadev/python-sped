@@ -160,10 +160,17 @@ class SPED_EFD_Info:
 	def formatar_linhas(numero):
 		return f'{int(numero):09d}'
 	
-	def formatar_cst(codigo_cst):
+	def formatar_cst_contrib(codigo_cst):
 		try:
 			codigo_cst = f'{int(codigo_cst):02d}'
-			return f'{codigo_cst} - {EFD_Tabelas.tabela_cst[codigo_cst]}'
+			return f'{codigo_cst} - {EFD_Tabelas.tabela_cst_contrib[codigo_cst]}'
+		except:
+			return codigo_cst
+
+	def formatar_cst_icms(codigo_cst):
+		try:
+			codigo_cst = f'{int(codigo_cst):03d}'
+			return f'{codigo_cst} - {EFD_Tabelas.tabela_cst_icms[codigo_cst]}'
 		except:
 			return codigo_cst
 	
@@ -199,10 +206,12 @@ class SPED_EFD_Info:
 		match_ncm   = re.search(r'COD_NCM', col, flags=re.IGNORECASE)
 		match_cnpj  = re.search(r'CNPJ', col, flags=re.IGNORECASE)
 		match_cpf   = re.search(r'CPF',  col, flags=re.IGNORECASE)
-		match_cst   = re.search(r'^CST|CST Código da Situação Tributária', col, flags=re.IGNORECASE)
 		match_nbc   = re.search(r'NAT_BC_CRED', col, flags=re.IGNORECASE)
 		match_tipo  = re.search(r'TIPO_ITEM', col, flags=re.IGNORECASE)
 		match_mod   = re.search(r'COD_MOD', col, flags=re.IGNORECASE)
+
+		match_cst_contib = re.search(r'^CST_(PIS|COFINS)|CST Código da Situação Tributária', col, flags=re.IGNORECASE)
+		match_cst_icms   = re.search(r'^CST_ICMS', col, flags=re.IGNORECASE)
 		
 		myDict[col] = identidade
 		
@@ -215,14 +224,16 @@ class SPED_EFD_Info:
 			myDict[col] = CampoChaveEletronica.formatar
 		elif match_ncm:
 			myDict[col] = CampoNCM.formatar
-		elif match_cst:
-			myDict[col] = formatar_cst
 		elif match_nbc:
 			myDict[col] = formatar_nbc
 		elif match_tipo:
 			myDict[col] = formatar_tipo
 		elif match_mod:
 			myDict[col] = formatar_mod
+		elif match_cst_contib:
+			myDict[col] = formatar_cst_contrib
+		elif match_cst_icms:
+			myDict[col] = formatar_cst_icms
 		
 		if match_cnpj and match_cpf:
 			myDict[col] = CampoCPFouCNPJ.formatar
@@ -236,12 +247,12 @@ class SPED_EFD_Info:
 			print(f'{key:>40}: [{idx:>2}] {myDict[key]}')
 	
 	def formatar_valor(self,nome,val):
-		'''
+		"""
 		Evitar n repetições de 'if condicao_j then A_j else B_j' tal que 1 <= j <= n, usar dicionário: myDict[key] = funtion_key(value)
 		Better optimization technique using if/else or dictionary
 		A series of if/else statement which receives the 'string' returns the appropriate function for it. (Around 40-50 if/else statements).
 		A dictionary maintaining the key-value pair. key as strings, and values as the function objects, and one main function to search and return the function object.
-		'''
+		"""
 		# https://stackoverflow.com/questions/11445226/better-optimization-technique-using-if-else-or-dictionary
 		# https://softwareengineering.stackexchange.com/questions/182093/why-store-a-function-inside-a-python-dictionary/182095
 		# https://stackoverflow.com/questions/9168340/using-a-dictionary-to-select-function-to-execute
@@ -365,10 +376,10 @@ class SPED_EFD_Info:
 		return info_de_abertura
 	
 	def imprimir_informacoes_linha_a_linha(self,sped_efd,output_filename):
-		'''
+		"""
 		Imprimir a título de aprendizagem
 		Observar as sequências de informações dos registros dos blocos
-		'''
+		"""
 		my_regex = r'^[A-Z]' # Ler os blocos da A a Z.
 
 		# https://docs.python.org/3/library/csv.html
@@ -415,10 +426,10 @@ class SPED_EFD_Info:
 						break
 	
 	def adicionar_informacoes(self,dict_info):
-		'''
+		"""
 		Adicionar informações em dict_info
 		Formatar alguns de seus campos com o uso de tabelas ou funções
-		'''
+		"""
 		dict_info['Arquivo da SPED EFD'] = self.basename
 		dict_info['Linhas'] = next(type(self).contador_de_linhas)
 

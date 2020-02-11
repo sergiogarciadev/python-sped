@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 Autor = 'Claudio Fernandes de Souza Rodrigues (claudiofsr@yahoo.com)'
-Data  = '10 de Fevereiro de 2020 (início: 29 de Janeiro de 2020)'
+Data  = '11 de Fevereiro de 2020 (início: 29 de Janeiro de 2020)'
 
 # Instruções (no Linux):
 
@@ -9,14 +9,14 @@ Data  = '10 de Fevereiro de 2020 (início: 29 de Janeiro de 2020)'
 # https://github.com/claudiofsr/python-sped
 # Clique em 'Clone or download'.
 # Em seguida, descompacte o arquivo copiado:
-# > unzip python-sped-master.zip
-# > cd python-sped-master
+# > unzip python-sped-11.0.zip
+# > cd python-sped-11.0
 # Para instalar o módulo do sped em seu sistema execute, como superusuário:
 # python setup.py install
-# Copie o arquivo 'efd_contribuicoes.py' de python-sped-master/relatorios
+# Copie o arquivo 'efd_relatorios.py' de python-sped-11.0/relatorios
 # para o diretório que contenha os arquivos de EFD Contribuições.
 # Em seguida, execute no terminal o camando:
-# > python efd_contribuicoes.py
+# > python efd_relatorios.py
 
 import sys, os
 from time import time, sleep
