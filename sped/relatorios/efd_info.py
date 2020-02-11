@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 Autor = 'Claudio Fernandes de Souza Rodrigues (claudiofsr@yahoo.com)'
-Data  = '10 de Fevereiro de 2020 (início: 10 de Janeiro de 2020)'
+Data  = '11 de Fevereiro de 2020 (início: 10 de Janeiro de 2020)'
 
 import os, csv, re, sys, itertools
 from datetime import datetime

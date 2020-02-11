@@ -19,7 +19,7 @@ class ArquivoDigital(object):
         self._blocos = OrderedDict()
 
     def readfile(self, filename, codificacao=None, verbose=None):
-        sucesso = False
+        leitura_completa = False
         if codificacao is None: # encoding='utf-8', 'latin-1', ...
             codificacao = 'utf-8'
         with open(filename, 'r', encoding=codificacao) as spedfile:
@@ -29,17 +29,16 @@ class ArquivoDigital(object):
                 # Em algumas EFDs foram encontrados registros digitados incorretamente em minúsculo.
                 # Por exemplo, o registro 'c491' deve ser corrigido para 'C491'.
                 line = line[:6].upper() + line[6:] # line = '|c491|...' --> '|C491|...'
-                registro = self.read_registro(line)
+                leitura_completa = self.read_registro(line, leitura_completa)
                 # Verificar se o arquivo SPED foi lido até a última linha válida que contém o registro '9999'.
-                if registro.__class__ == self.__class__.registro_encerramento:
-                    sucesso = True
+                if leitura_completa:
                     break
-        if not sucesso:
+        if not leitura_completa:
             raise RuntimeError(u"\nOcorreu uma falha ao ler o arquivo: '%s'.\n" % filename)
         elif verbose:
             print(u"O arquivo SPED '%s' foi lido com sucesso.\n" % filename)
 
-    def read_registro(self, line):
+    def read_registro(self, line, leitura_completa):
         reg_id = line.split('|')[1]
         
         try:
@@ -59,6 +58,7 @@ class ArquivoDigital(object):
         elif registro.__class__ == self.__class__.registro_encerramento:
 			# Atualizar o registro de encerramento 9999 do SPED
             self._registro_encerramento = registro
+            leitura_completa = True
         elif registro.__class__ == bloco.registro_abertura.__class__:
 			# Atualizar os registros de abertura dos blocos: 0001, A001, C001, ...
             bloco.registro_abertura = registro           
@@ -69,7 +69,7 @@ class ArquivoDigital(object):
 			# Adicionar informações dos registros a cada linha obtida de filename
             bloco.add(registro)
 
-        return registro
+        return leitura_completa
 
     def write_to(self, buff):
         buff.write(self._registro_abertura.as_line() + u'\r\n')
