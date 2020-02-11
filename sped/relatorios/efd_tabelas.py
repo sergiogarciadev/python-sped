@@ -1,8 +1,7 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 Autor = 'Claudio Fernandes de Souza Rodrigues (claudiofsr@yahoo.com)'
-Data  = '06 de Fevereiro de 2020 (início: 10 de Janeiro de 2020)'
+Data  = '11 de Fevereiro de 2020 (início: 10 de Janeiro de 2020)'
 
 class EFD_Tabelas:
 	"""
@@ -78,61 +77,8 @@ class EFD_Tabelas:
 	}
 
 	# Tabela Código da Situação Tributária - CST (ICMS) (Pacote: Tabelas de Situação Tributária)
+	# Versão 3, somente códigos vigentes.
 	tabela_cst_icms = {
-		'000': 'Nacional - Tributada integralmente',
-		'010': 'Nacional - Tributada e com cobrança do ICMS por substituição tributária',
-		'020': 'Nacional - Com redução de base de cálculo',
-		'030': 'Nacional - Isenta ou não tributada e com cobrança do ICMS por substituição tributária',
-		'040': 'Nacional - Isenta',
-		'041': 'Nacional - Não tributada',
-		'050': 'Nacional - Suspensão',
-		'051': 'Nacional - Diferimento',
-		'060': 'Nacional - ICMS cobrado anteriormente por substituição tributária',
-		'070': 'Nacional - Com redução de base de cálculo e cobrança do ICMS por substituição tributária',
-		'090': 'Nacional - Outras',
-		'100': 'Estrangeira - Importação direta - Tributada integralmente',
-		'110': 'Estrangeira - Importação direta - Tributada e com cobrança do ICMS por substituição tributária',
-		'120': 'Estrangeira - Importação direta - Com redução de base de cálculo',
-		'130': 'Estrangeira - Importação direta - Isenta ou não tributada e com cobrança do ICMS por substituição tributária',
-		'140': 'Estrangeira - Importação direta - Isenta',
-		'141': 'Estrangeira - Importação direta - Não tributada',
-		'150': 'Estrangeira - Importação direta - Suspensão',
-		'151': 'Estrangeira - Importação direta - Diferimento',
-		'160': 'Estrangeira - Importação direta - ICMS cobrado anteriormente por substituição tributária',
-		'170': 'Estrangeira - Importação direta - Com redução de base de cálculo e cobrança do ICMS por substituição tributária',
-		'190': 'Estrangeira - Importação direta - Outras',
-		'200': 'Estrangeira - Adquirida no mercado interno - Tributada integralmente',
-		'210': 'Estrangeira - Adquirida no mercado interno - Tributada e com cobrança do ICMS por substituição tributária',
-		'220': 'Estrangeira - Adquirida no mercado interno - Com redução de base de cálculo',
-		'230': 'Estrangeira - Adquirida no mercado interno - Isenta ou não tributada e com cobrança do ICMS por substituição tributária',
-		'240': 'Estrangeira - Adquirida no mercado interno - Isenta',
-		'241': 'Estrangeira - Adquirida no mercado interno - Não tributada',
-		'250': 'Estrangeira - Adquirida no mercado interno - Suspensão',
-		'251': 'Estrangeira - Adquirida no mercado interno - Diferimento',
-		'260': 'Estrangeira - Adquirida no mercado interno - ICMS cobrado anteriormente por substituição tributária',
-		'270': 'Estrangeira - Adquirida no mercado interno - Com redução de base de cálculo e cobrança do ICMS por substituição tributária',
-		'290': 'Estrangeira - Adquirida no mercado interno - Outras',
-		'101': 'Simples Nacional - Tributada pelo Simples Nacional com permissão de crédito',
-		'102': 'Simples Nacional - Tributada pelo Simples Nacional sem permissão de crédito',
-		'103': 'Simples Nacional - Isenção do ICMS no Simples Nacional para faixa de receita bruta',
-		'201': 'Simples Nacional - Tributada pelo Simples Nacional com permissão de crédito e com cobrança do ICMS por substituição tributária',
-		'202': 'Simples Nacional - Tributada pelo Simples Nacional sem permissão de crédito e com cobrança do ICMS por substituição tributária',
-		'203': 'Simples Nacional - Isenção do ICMS no Simples Nacional para faixa de receita bruta e com cobrança do ICMS por substituição tributária',
-		'300': 'Simples Nacional - Imune',
-		'400': 'Simples Nacional - Não tributada pelo Simples Nacional',
-		'500': 'Simples Nacional - ICMS cobrado anteriormente por substituição tributária (substituído) ou por antecipação',
-		'900': 'Simples Nacional - Outros',
-		'000': 'Nacional, exceto as indicadas nos códigos 3 a 5 da Tabela A - Tributada integralmente',
-		'010': 'Nacional, exceto as indicadas nos códigos 3 a 5 da Tabela A - Tributada e com cobrança do ICMS por substituição tributária',
-		'020': 'Nacional, exceto as indicadas nos códigos 3 a 5 da Tabela A - Com redução de base de cálculo',
-		'030': 'Nacional, exceto as indicadas nos códigos 3 a 5 da Tabela A - Isenta ou não tributada e com cobrança do ICMS por substituição tributária',
-		'040': 'Nacional, exceto as indicadas nos códigos 3 a 5 da Tabela A - Isenta',
-		'041': 'Nacional, exceto as indicadas nos códigos 3 a 5 da Tabela A - Não tributada',
-		'050': 'Nacional, exceto as indicadas nos códigos 3 a 5 da Tabela A - Suspensão',
-		'051': 'Nacional, exceto as indicadas nos códigos 3 a 5 da Tabela A - Diferimento',
-		'060': 'Nacional, exceto as indicadas nos códigos 3 a 5 da Tabela A - ICMS cobrado anteriormente por substituição tributária',
-		'070': 'Nacional, exceto as indicadas nos códigos 3 a 5 da Tabela A - Com redução de base de cálculo e cobrança do ICMS por substituição tributária',
-		'090': 'Nacional, exceto as indicadas nos códigos 3 a 5 da Tabela A - Outras',
 		'000': 'Nacional, exceto as indicadas nos códigos 3, 4, 5 e 8 da Tabela A - Tributada integralmente',
 		'010': 'Nacional, exceto as indicadas nos códigos 3, 4, 5 e 8 da Tabela A - Tributada e com cobrança do ICMS por substituição tributária',
 		'020': 'Nacional, exceto as indicadas nos códigos 3, 4, 5 e 8 da Tabela A - Com redução de base de cálculo',
@@ -145,6 +91,9 @@ class EFD_Tabelas:
 		'070': 'Nacional, exceto as indicadas nos códigos 3, 4, 5 e 8 da Tabela A - Com redução de base de cálculo e cobrança do ICMS por substituição tributária',
 		'090': 'Nacional, exceto as indicadas nos códigos 3, 4, 5 e 8 da Tabela A - Outras',
 		'100': 'Estrangeira - Importação direta, exceto a indicada no código 6 da Tabela A - Tributada integralmente',
+		'101': 'Simples Nacional - Tributada pelo Simples Nacional com permissão de crédito',
+		'102': 'Simples Nacional - Tributada pelo Simples Nacional sem permissão de crédito',
+		'103': 'Simples Nacional - Isenção do ICMS no Simples Nacional para faixa de receita bruta',
 		'110': 'Estrangeira - Importação direta, exceto a indicada no código 6 da Tabela A - Tributada e com cobrança do ICMS por substituição tributária',
 		'120': 'Estrangeira - Importação direta, exceto a indicada no código 6 da Tabela A - Com redução de base de cálculo',
 		'130': 'Estrangeira - Importação direta, exceto a indicada no código 6 da Tabela A - Isenta ou não tributada e com cobrança do ICMS por substituição tributária',
@@ -156,6 +105,9 @@ class EFD_Tabelas:
 		'170': 'Estrangeira - Importação direta, exceto a indicada no código 6 da Tabela A - Com redução de base de cálculo e cobrança do ICMS por substituição tributária',
 		'190': 'Estrangeira - Importação direta, exceto a indicada no código 6 da Tabela A - Outras',
 		'200': 'Estrangeira - Adquirida no mercado interno, exceto a indicada no código 7 da Tabela A - Tributada integralmente',
+		'201': 'Simples Nacional - Tributada pelo Simples Nacional com permissão de crédito e com cobrança do ICMS por substituição tributária',
+		'202': 'Simples Nacional - Tributada pelo Simples Nacional sem permissão de crédito e com cobrança do ICMS por substituição tributária',
+		'203': 'Simples Nacional - Isenção do ICMS no Simples Nacional para faixa de receita bruta e com cobrança do ICMS por substituição tributária',
 		'210': 'Estrangeira - Adquirida no mercado interno, exceto a indicada no código 7 da Tabela A - Tributada e com cobrança do ICMS por substituição tributária',
 		'220': 'Estrangeira - Adquirida no mercado interno, exceto a indicada no código 7 da Tabela A - Com redução de base de cálculo',
 		'230': 'Estrangeira - Adquirida no mercado interno, exceto a indicada no código 7 da Tabela A - Isenta ou não tributada e com cobrança do ICMS por substituição tributária',
@@ -166,17 +118,6 @@ class EFD_Tabelas:
 		'260': 'Estrangeira - Adquirida no mercado interno, exceto a indicada no código 7 da Tabela A - ICMS cobrado anteriormente por substituição tributária',
 		'270': 'Estrangeira - Adquirida no mercado interno, exceto a indicada no código 7 da Tabela A - Com redução de base de cálculo e cobrança do ICMS por substituição tributária',
 		'290': 'Estrangeira - Adquirida no mercado interno, exceto a indicada no código 7 da Tabela A - Outras',
-		'300': 'Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40% (quarenta por cento) - Tributada integralmente',
-		'310': 'Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40% (quarenta por cento) - Tributada e com cobrança do ICMS por substituição tributária',
-		'320': 'Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40% (quarenta por cento) - Com redução de base de cálculo',
-		'330': 'Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40% (quarenta por cento) - Isenta ou não tributada e com cobrança do ICMS por substituição tributária',
-		'340': 'Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40% (quarenta por cento) - Isenta',
-		'341': 'Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40% (quarenta por cento) - Não tributada',
-		'350': 'Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40% (quarenta por cento) - Suspensão',
-		'351': 'Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40% (quarenta por cento) - Diferimento',
-		'360': 'Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40% (quarenta por cento) - ICMS cobrado anteriormente por substituição tributária',
-		'370': 'Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40% (quarenta por cento) - Com redução de base de cálculo e cobrança do ICMS por substituição tributária',
-		'390': 'Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40% (quarenta por cento) - Outras',
 		'300': 'Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40% (quarenta por cento) e inferior ou igual a 70% (setenta por cento) - Tributada integralmente',
 		'310': 'Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40% (quarenta por cento) e inferior ou igual a 70% (setenta por cento) - Tributada e com cobrança do ICMS por substituição tributária',
 		'320': 'Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40% (quarenta por cento) e inferior ou igual a 70% (setenta por cento) - Com redução de base de cálculo',
@@ -243,6 +184,7 @@ class EFD_Tabelas:
 		'860': 'Nacional, mercadoria ou bem com Conteúdo de Importação superior a 70% (setenta por cento) - ICMS cobrado anteriormente por substituição tributária',
 		'870': 'Nacional, mercadoria ou bem com Conteúdo de Importação superior a 70% (setenta por cento) - Com redução de base de cálculo e cobrança do ICMS por substituição tributária',
 		'890': 'Nacional, mercadoria ou bem com Conteúdo de Importação superior a 70% (setenta por cento) - Outras',
+		'900': 'Simples Nacional - Outros',
 	}
 
 	tabela_tipo_do_item = {
