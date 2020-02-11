@@ -123,6 +123,8 @@ class SPED_EFD_Info:
 		self.imprimir_informacoes_da_efd(self.objeto_sped, output_filename=arquivo_csv)
 
 	def __repr__(self):
+		# https://stackoverflow.com/questions/25577578/access-class-variable-from-instance
+    	# Devo substituir 'self.__class__.static_var' por 'type(self).static_var' ?
 		return f'{type(self).__name__}(file_path={self.file_path!r}, encoding={self.encoding!r}, efd_tipo={self.efd_tipo!r}, verbose={self.verbose!r})'
 		
 	# https://radek.io/2011/07/21/static-variables-and-methods-in-python/
@@ -152,21 +154,17 @@ class SPED_EFD_Info:
 		
 		return natureza_bc
 	
-	@staticmethod
 	def identidade(chave):
 		return chave
 
-	@staticmethod
 	def formatar_linhas(numero):
 		return f'{int(numero):09d}'
 
-	@staticmethod
 	def formatar_ncm(ncm):
 		if len(ncm) == 8:
 			ncm = "%s.%s.%s" % (ncm[0:4],ncm[4:6],ncm[6:8])
 		return ncm
 	
-	@staticmethod
 	def formatar_cst(codigo_cst):
 		try:
 			codigo_cst = f'{int(codigo_cst):02d}'
@@ -174,7 +172,6 @@ class SPED_EFD_Info:
 		except:
 			return codigo_cst
 	
-	@staticmethod
 	def formatar_nbc(natureza_bc):
 		try:
 			natureza_bc = f'{int(natureza_bc):02d}'
@@ -182,7 +179,6 @@ class SPED_EFD_Info:
 		except:
 			return natureza_bc
 	
-	@staticmethod
 	def formatar_tipo(tipo_do_item):
 		try:
 			tipo_do_item = f'{int(tipo_do_item):02d}'
@@ -190,7 +186,6 @@ class SPED_EFD_Info:
 		except:
 			return tipo_do_item
 	
-	@staticmethod
 	def formatar_mod(doc_fiscal):
 		try:
 			return f'{doc_fiscal} - {EFD_Tabelas.tabela_modelos_documentos_fiscais[doc_fiscal]}'

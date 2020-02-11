@@ -80,7 +80,7 @@ class Registro(object):
                     if self._valores[c.indice] != c.valor:
                         raise CampoError(self, c.nome)
             # Inicializar contador na leitura do registro de abertura '0000'
-            # if type(self).__name__ == 'Registro0000':
+            # if self.__class__.__name__ == 'Registro0000':
             if self._valores[1] == '0000':
                 Registro.contador_de_linhas = itertools.count(1)
             # Informação do número da linha do arquivo sped
@@ -128,7 +128,7 @@ class Registro(object):
         return '|'.join(self._valores)
 
     def __repr__(self):
-        return '<%s.%s>' % (type(self).__module__, type(self).__name__)
+        return '<%s.%s>' % (self.__class__.__module__, self.__class__.__name__)
 
 class RegistroIndefinido(Registro):
     def __init__(self):

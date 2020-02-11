@@ -31,7 +31,7 @@ class ArquivoDigital(object):
                 line = line[:6].upper() + line[6:] # line = '|c491|...' --> '|C491|...'
                 registro = self.read_registro(line)
                 # Verificar se o arquivo SPED foi lido até a última linha válida que contém o registro '9999'.
-                if registro.__class__ == type(self).registro_encerramento:
+                if registro.__class__ == self.__class__.registro_encerramento:
                     sucesso = True
                     break
         if not sucesso:
@@ -44,8 +44,8 @@ class ArquivoDigital(object):
         
         try:
             # https://stackoverflow.com/questions/25577578/access-class-variable-from-instance
-            # substituir 'self.__class__.registros' por 'type(self).registros'
-            registro_class = getattr(type(self).registros, 'Registro' + reg_id)
+            # Devo substituir 'self.__class__.registros' por 'type(self).registros' ?
+            registro_class = getattr(self.__class__.registros, 'Registro' + reg_id)
         except AttributeError:
             raise RuntimeError(u"Arquivo inválido para EFD - PIS/COFINS. Registro: %s" % reg_id)
 
@@ -53,10 +53,10 @@ class ArquivoDigital(object):
         bloco_id = reg_id[0]
         bloco = self._blocos[bloco_id]
 
-        if registro.__class__ == type(self).registro_abertura:
+        if registro.__class__ == self.__class__.registro_abertura:
 			# Atualizar o registro de abertura 0000 do SPED
             self._registro_abertura = registro
-        elif registro.__class__ == type(self).registro_encerramento:
+        elif registro.__class__ == self.__class__.registro_encerramento:
 			# Atualizar o registro de encerramento 9999 do SPED
             self._registro_encerramento = registro
         elif registro.__class__ == bloco.registro_abertura.__class__:
