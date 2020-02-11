@@ -359,3 +359,10 @@ class CampoChaveEletronica(Campo):
                 chave = "%s.%s.%s.%s.%s.%s.%s.%s-%s" % (chave[0:2],chave[2:6],chave[6:20],chave[20:22],chave[22:25],chave[25:34],chave[34:35],chave[35:43],chave[43:44])
         return chave + mensagem_de_validacao
 
+
+class CampoNCM(Campo):
+    @staticmethod
+    def formatar(ncm):
+        if len(ncm) == 8:
+            ncm = "%s.%s.%s" % (ncm[0:4],ncm[4:6],ncm[6:8])
+        return ncm

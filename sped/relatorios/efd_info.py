@@ -10,7 +10,7 @@ from time import time, sleep
 from sped.efd.pis_cofins.arquivos import ArquivoDigital as ArquivoDigital_PIS_COFINS
 from sped.efd.icms_ipi.arquivos   import ArquivoDigital as ArquivoDigital_ICMS_IPI
 from sped.relatorios.efd_tabelas  import EFD_Tabelas
-from sped.campos import CampoData, CampoCNPJ, CampoCPF, CampoCPFouCNPJ, CampoChaveEletronica
+from sped.campos import CampoData, CampoCNPJ, CampoCPF, CampoCPFouCNPJ, CampoChaveEletronica, CampoNCM
 
 # Versão mínima exigida: python 3.6.0
 python_version = sys.version_info
@@ -54,7 +54,7 @@ class SPED_EFD_Info:
 
 	registros_de_valor = ['VL_DOC', 'VL_BRT', 'VL_OPER', 'VL_OPR', 'VL_OPER_DEP', 'VL_BC_CRED', 'VL_BC_EST', 'VL_TOT_REC', 'VL_REC_CAIXA', 'VL_REC_COMP', 'VL_REC', 'VL_ITEM'] # adicionado 'VL_OPR' para EFD ICMS_IPI
 	
-	registros_totais = [*registros_de_data, *registros_de_identificacao_do_item, *registros_de_plano_de_contas, *registros_de_codigo_cst, *registros_de_chave_eletronica, *registros_de_base_de_calculo, *registros_de_valor]
+	registros_totais = registros_de_data + registros_de_identificacao_do_item + registros_de_plano_de_contas + registros_de_codigo_cst + registros_de_chave_eletronica + registros_de_base_de_calculo + registros_de_valor
 
 	# Imprimir as informações desta coluna, nesta ordem
 	colunas = ['Linhas', 'Arquivo da SPED EFD', 'Nº da Linha da EFD', 'CNPJ', 'NOME', 'Mês do Período de Apuração', 'Ano do Período de Apuração', 'Tipo de Operação', 'IND_ORIG_CRED', 'REG', 'CST Código da Situação Tributária', 
@@ -159,11 +159,6 @@ class SPED_EFD_Info:
 
 	def formatar_linhas(numero):
 		return f'{int(numero):09d}'
-
-	def formatar_ncm(ncm):
-		if len(ncm) == 8:
-			ncm = "%s.%s.%s" % (ncm[0:4],ncm[4:6],ncm[6:8])
-		return ncm
 	
 	def formatar_cst(codigo_cst):
 		try:
@@ -219,7 +214,7 @@ class SPED_EFD_Info:
 		elif match_chave:
 			myDict[col] = CampoChaveEletronica.formatar
 		elif match_ncm:
-			myDict[col] = formatar_ncm
+			myDict[col] = CampoNCM.formatar
 		elif match_cst:
 			myDict[col] = formatar_cst
 		elif match_nbc:
