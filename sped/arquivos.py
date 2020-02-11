@@ -25,13 +25,13 @@ class ArquivoDigital(object):
         with open(filename, 'r', encoding=codificacao) as spedfile:
             for line in [line.strip() for line in spedfile]:
                 # a simple way to remove multiple spaces in a string
-                line = re.sub('\s{2,}', ' ', line)
+                line = re.sub(r'\s{2,}', ' ', line)
                 # Em algumas EFDs foram encontrados registros digitados incorretamente em minúsculo.
                 # Por exemplo, o registro 'c491' deve ser corrigido para 'C491'.
                 line = line[:6].upper() + line[6:] # line = '|c491|...' --> '|C491|...'
-                regt = self.read_registro(line)
+                registro = self.read_registro(line)
                 # Verificar se o arquivo SPED foi lido até a última linha válida que contém o registro '9999'.
-                if regt.__class__ == self.__class__.registro_encerramento:
+                if registro.__class__ == type(self).registro_encerramento:
                     sucesso = True
                     break
         if not sucesso:
@@ -43,7 +43,9 @@ class ArquivoDigital(object):
         reg_id = line.split('|')[1]
         
         try:
-            registro_class = getattr(self.__class__.registros, 'Registro' + reg_id)
+            # https://stackoverflow.com/questions/25577578/access-class-variable-from-instance
+            # substituir 'self.__class__.registros' por 'type(self).registros'
+            registro_class = getattr(type(self).registros, 'Registro' + reg_id)
         except AttributeError:
             raise RuntimeError(u"Arquivo inválido para EFD - PIS/COFINS. Registro: %s" % reg_id)
 
@@ -51,10 +53,10 @@ class ArquivoDigital(object):
         bloco_id = reg_id[0]
         bloco = self._blocos[bloco_id]
 
-        if registro.__class__ == self.__class__.registro_abertura:
+        if registro.__class__ == type(self).registro_abertura:
 			# Atualizar o registro de abertura 0000 do SPED
             self._registro_abertura = registro
-        elif registro.__class__ == self.__class__.registro_encerramento:
+        elif registro.__class__ == type(self).registro_encerramento:
 			# Atualizar o registro de encerramento 9999 do SPED
             self._registro_encerramento = registro
         elif registro.__class__ == bloco.registro_abertura.__class__:
