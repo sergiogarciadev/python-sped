@@ -20,6 +20,7 @@ Data  = '12 de Fevereiro de 2020 (início: 29 de Janeiro de 2020)'
 
 import sys, os
 from time import time, sleep
+from sped import __version__
 from sped.relatorios.efd_read_dir import ReadFiles, Total_Execution_Time
 from sped.relatorios.efd_info import SPED_EFD_Info
 
@@ -31,6 +32,8 @@ if python_version < (3,6,0):
 	exit()
 
 if __name__ == '__main__':
+
+	print(f'\nPython Sped - versão: {__version__}\n')
 	
 	dir_path = os.getcwd() # CurrentDirectory
 	extensao = 'txt'
@@ -63,7 +66,7 @@ if __name__ == '__main__':
 		indice_do_arquivo = 0
 	else:
 		dir_path_exemplo = '/home/claudio/Documentos/'
-		print(f"\nA lista de arquivos de SPED EFD é obtida a partir de:\n")
+		print(f"A lista de arquivos de SPED EFD é obtida a partir de:\n")
 		print(f"\tlista_de_arquivos = ReadFiles(root_path = dir_path, extension = extensao).\n")
 		print(f"tal que:\n")
 		print(f"\tdir_path = '{dir_path}' e extensao = '{extensao}'.\n")

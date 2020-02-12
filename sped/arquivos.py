@@ -17,28 +17,28 @@ class ArquivoDigital(object):
         self._registro_abertura = self.registro_abertura()
         self._registro_encerramento = self.registro_encerramento()
         self._blocos = OrderedDict()
+        self.leitura_completa = False
 
     def readfile(self, filename, codificacao=None, verbose=None):
-        leitura_completa = False
-        if codificacao is None: # encoding='utf-8', 'latin-1', ...
+        if codificacao is None: # 'utf-8', 'latin-1', ...
             codificacao = 'utf-8'
         with open(filename, 'r', encoding=codificacao, errors='ignore') as spedfile:
             for line in [line.strip() for line in spedfile]:
-                # a simple way to remove multiple spaces in a string
+                # A simple way to remove multiple spaces in a string
                 line = re.sub(r'\s{2,}', ' ', line)
                 # Em algumas EFDs foram encontrados registros digitados incorretamente em minúsculo.
                 # Por exemplo, o registro 'c491' deve ser corrigido para 'C491'.
                 line = line[:6].upper() + line[6:] # line = '|c491|...' --> '|C491|...'
-                leitura_completa = self.read_registro(line, leitura_completa)
+                self.read_registro(line)
                 # Verificar se o arquivo SPED foi lido até a última linha válida que contém o registro '9999'.
-                if leitura_completa:
+                if self.leitura_completa:
                     break
-        if not leitura_completa:
+        if not self.leitura_completa:
             raise RuntimeError(u"\nOcorreu uma falha ao ler o arquivo: '%s'.\n" % filename)
         elif verbose:
             print(u"O arquivo SPED '%s' foi lido com sucesso.\n" % filename)
 
-    def read_registro(self, line, leitura_completa):
+    def read_registro(self, line):
         reg_id = line.split('|')[1]
         
         try:
@@ -58,7 +58,7 @@ class ArquivoDigital(object):
         elif registro.__class__ == self.__class__.registro_encerramento:
 			# Atualizar o registro de encerramento 9999 do SPED
             self._registro_encerramento = registro
-            leitura_completa = True
+            self.leitura_completa = True
         elif registro.__class__ == bloco.registro_abertura.__class__:
 			# Atualizar os registros de abertura dos blocos: 0001, A001, C001, ...
             bloco.registro_abertura = registro           
@@ -68,8 +68,6 @@ class ArquivoDigital(object):
         else:
 			# Adicionar informações dos registros a cada linha obtida de filename
             bloco.add(registro)
-
-        return leitura_completa
 
     def write_to(self, buff):
         buff.write(self._registro_abertura.as_line() + u'\r\n')
