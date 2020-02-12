@@ -1,15 +1,16 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 Autor = 'Claudio Fernandes de Souza Rodrigues (claudiofsr@yahoo.com)'
-Data  = '06 de Fevereiro de 2020 (início: 10 de Janeiro de 2020)'
+Data  = '12 de Fevereiro de 2020 (início: 10 de Janeiro de 2020)'
 
-import os, csv, re, sys, itertools
+import os, re, sys, itertools, csv
+import xlsxwriter # pip install xlsxwriter
 from datetime import datetime
 from time import time, sleep
-from sped.efd.pis_cofins.arquivos import ArquivoDigital
-from sped.relatorios.efd_tabelas import EFD_Tabelas
-from sped.campos import CampoCNPJ, CampoCPF, CampoCPFouCNPJ, CampoChaveEletronica
+from sped.efd.pis_cofins.arquivos import ArquivoDigital as ArquivoDigital_PIS_COFINS
+from sped.efd.icms_ipi.arquivos   import ArquivoDigital as ArquivoDigital_ICMS_IPI
+from sped.relatorios.efd_tabelas  import EFD_Tabelas
+from sped.campos import CampoData, CampoCNPJ, CampoCPF, CampoCPFouCNPJ, CampoChaveEletronica, CampoNCM
 
 # Versão mínima exigida: python 3.6.0
 python_version = sys.version_info
@@ -19,11 +20,11 @@ if python_version < (3,6,0):
 	exit()
 
 # Python OOP: Atributos e Métodos (def, funções)
-class EFD_Contrib_Info(ArquivoDigital):
+class SPED_EFD_Info:
 	"""
-	Imprimir informações da SPED EFD Contribuições em um arquivo.csv
-	tal que em uma linha contenha todas as informações suficientes para
-	verificar a correção dos lançamentos das contribuições de PIS/COFINS.
+	Imprimir SPED EFD Contribuições ou ICMS_IPI nos formatos .csv e .xlsx tal que 
+	contenha todas as informações suficientes para verificar a correção dos lançamentos 
+	ou apuração das contribuições de PIS/COFINS ou do ICMS segundo a legislação vigente.
 	"""
 	
 	# class or static variable
@@ -53,16 +54,16 @@ class EFD_Contrib_Info(ArquivoDigital):
 
 	registros_de_valor = ['VL_DOC', 'VL_BRT', 'VL_OPER', 'VL_OPR', 'VL_OPER_DEP', 'VL_BC_CRED', 'VL_BC_EST', 'VL_TOT_REC', 'VL_REC_CAIXA', 'VL_REC_COMP', 'VL_REC', 'VL_ITEM'] # adicionado 'VL_OPR' para EFD ICMS_IPI
 	
-	registros_totais = [*registros_de_data, *registros_de_identificacao_do_item, *registros_de_plano_de_contas, *registros_de_codigo_cst, *registros_de_chave_eletronica, *registros_de_base_de_calculo, *registros_de_valor]
+	registros_totais = registros_de_data + registros_de_identificacao_do_item + registros_de_plano_de_contas + registros_de_codigo_cst + registros_de_chave_eletronica + registros_de_base_de_calculo + registros_de_valor
 
 	# Imprimir as informações desta coluna, nesta ordem
 	colunas = ['Linhas', 'Arquivo da SPED EFD', 'Nº da Linha da EFD', 'CNPJ', 'NOME', 'Mês do Período de Apuração', 'Ano do Período de Apuração', 'Tipo de Operação', 'IND_ORIG_CRED', 'REG', 'CST Código da Situação Tributária', 
 			   'NAT_BC_CRED', 'CFOP', 'COD_PART', *registros_de_cadastro_do_participante, 'CNPJ_CPF_PART', 'Data de Emissão', 'Data de Execução', 'COD_ITEM', *registros_de_identificacao_do_item, 
-			   'Chave Eletrônica', 'COD_MOD', 'NUM_DOC', 'NUM_ITEM', 'COD_CTA', *registros_de_plano_de_contas, 'Valor do Item', 'Valor da Base de Cálculo', 'ALIQ_PIS', 'ALIQ_COFINS']
+			   'Chave Eletrônica', 'COD_MOD', 'NUM_DOC', 'NUM_ITEM', 'COD_CTA', *registros_de_plano_de_contas, 'Valor do Item', 'Valor da Base de Cálculo', 'ALIQ_PIS', 'ALIQ_COFINS', 'CST_ICMS', 'VL_BC_ICMS', 'ALIQ_ICMS']
 
 	# initialize the attributes of the class
 	
-	def __init__(self, file_path=None, encoding=None, verbose=False):
+	def __init__(self, file_path=None, encoding=None, efd_tipo=None, verbose=False):
 
 		if file_path is None or not os.path.isfile(file_path):
 			raise ValueError(f'O arquivo file_path = {file_path} não é válido!')
@@ -73,6 +74,15 @@ class EFD_Contrib_Info(ArquivoDigital):
 			self.encoding = 'UTF-8'
 		else:
 			self.encoding = encoding
+
+		if efd_tipo is None or re.search(r'PIS|COFINS|Contrib', efd_tipo, flags=re.IGNORECASE):
+			self.objeto_sped = ArquivoDigital_PIS_COFINS() # instanciar objeto sped_efd
+			self.efd_tipo = 'efd_contribuicoes'
+		elif re.search(r'ICMS|IPI', efd_tipo, flags=re.IGNORECASE):
+			self.objeto_sped = ArquivoDigital_ICMS_IPI()   # instanciar objeto sped_efd
+			self.efd_tipo = 'efd_icms_ipi'
+		else:
+			raise ValueError(f'efd_tipo = {efd_tipo} inválido!')
 		
 		if not isinstance(verbose, bool):
 			raise ValueError(f'verbose deve ser uma variável boolean (True or False). verbose = {verbose} é inválido!')
@@ -83,8 +93,7 @@ class EFD_Contrib_Info(ArquivoDigital):
 	
 	@property
 	def imprimir_informacoes(self):
-		
-		self.objeto_sped = ArquivoDigital() # instanciar objeto sped_efd			
+				
 		self.objeto_sped.readfile(self.file_path, codificacao=self.encoding, verbose=self.verbose)
 		
 		self.info_do_participante = self.cadastro_do_participante(self.objeto_sped)
@@ -104,8 +113,9 @@ class EFD_Contrib_Info(ArquivoDigital):
 		
 		self.info_de_abertura = self.obter_info_de_abertura(self.objeto_sped)
 		
-		filename, file_extension = os.path.splitext(self.file_path)
-		arquivo_csv = filename + '.csv'
+		filename, _ = os.path.splitext(self.file_path)
+		arquivo_csv   = filename + '.csv'
+		arquivo_excel = filename + '.xlsx'
 		
 		# Função desabilitada
 		# Funçao utilizada apenas para teste
@@ -113,8 +123,12 @@ class EFD_Contrib_Info(ArquivoDigital):
 		
 		self.imprimir_informacoes_da_efd(self.objeto_sped, output_filename=arquivo_csv)
 
+		self.convert_csv_to_xlsx(imput_csv=arquivo_csv, output_excel=arquivo_excel)
+
 	def __repr__(self):
-		return f'{self.__class__.__name__}(file_path = {self.file_path!r}, encoding = {self.encoding!r}, verbose = {self.verbose!r})'
+		# https://stackoverflow.com/questions/25577578/access-class-variable-from-instance
+    	# Devo substituir 'self.__class__.static_var' por 'type(self).static_var' ?
+		return f'{type(self).__name__}(file_path={self.file_path!r}, encoding={self.encoding!r}, efd_tipo={self.efd_tipo!r}, verbose={self.verbose!r})'
 		
 	# https://radek.io/2011/07/21/static-variables-and-methods-in-python/
 	@staticmethod
@@ -149,53 +163,17 @@ class EFD_Contrib_Info(ArquivoDigital):
 	def formatar_linhas(numero):
 		return f'{int(numero):09d}'
 	
-	def formatar_data(data_in):
-		dt = datetime.strptime(data_in, "%d%m%Y") # ddmmaaaa
-		#data_out =  dt.isoformat('T')
-		#data_out = dt.strftime('%x %X') # excel date format
-		data_out = dt.strftime("%d/%m/%Y")
-		return data_out
-
-	def formatar_chave(chave):
-		chave_copia = chave
-		if len(chave) == 44:
-			chave_copia = "%s.%s.%s.%s.%s.%s.%s.%s-%s" % (chave[0:2],chave[2:6],chave[6:20],chave[20:22],chave[22:25],chave[25:34],chave[34:35],chave[35:43],chave[43:44])
-		if len(chave) >= 1 and not CampoChaveEletronica.validar(chave):
-			chave_copia = chave_copia + ' : o dígito verificador da chave é inválido!'
-		return chave_copia
-
-	def formatar_ncm(ncm):
-		if len(ncm) == 8:
-			ncm = "%s.%s.%s" % (ncm[0:4],ncm[4:6],ncm[6:8])
-		return ncm
-	
-	def formatar_cnpj(cnpj):
-		cnpj_copia = cnpj
-		if len(cnpj) == 14:
-			cnpj_copia = "%s.%s.%s/%s-%s" % (cnpj[0:2],cnpj[2:5],cnpj[5:8],cnpj[8:12],cnpj[12:14])
-		if len(cnpj) >= 1 and not CampoCNPJ.validar(cnpj):
-			cnpj_copia = cnpj_copia + ' : o dígito verificador do cnpj é inválido!'
-		return cnpj_copia
-	
-	def formatar_cpf(cpf):
-		cpf_copia = cpf
-		if len(cpf) == 11:
-			cpf_copia = "%s.%s.%s-%s" % (cpf[0:3],cpf[3:6],cpf[6:9],cpf[9:11])
-		if len(cpf) >= 1 and not CampoCPF.validar(cpf):
-			cpf_copia = cpf_copia + ' : o dígito verificador do cpf é inválido!'
-		return cpf_copia
-
-	def formatar_cnpj_cpf(pjpf):
-		if len(pjpf) == 11:
-			pjpf = "CPF %s.%s.%s-%s" % (pjpf[0:3],pjpf[3:6],pjpf[6:9],pjpf[9:11])
-		elif len(pjpf) == 14:
-			pjpf = "CNPJ %s.%s.%s/%s-%s" % (pjpf[0:2],pjpf[2:5],pjpf[5:8],pjpf[8:12],pjpf[12:14])
-		return pjpf
-	
-	def formatar_cst(codigo_cst):
+	def formatar_cst_contrib(codigo_cst):
 		try:
 			codigo_cst = f'{int(codigo_cst):02d}'
-			return f'{codigo_cst} - {EFD_Tabelas.tabela_cst[codigo_cst]}'
+			return f'{codigo_cst} - {EFD_Tabelas.tabela_cst_contrib[codigo_cst]}'
+		except:
+			return codigo_cst
+
+	def formatar_cst_icms(codigo_cst):
+		try:
+			codigo_cst = f'{int(codigo_cst):03d}'
+			return f'{codigo_cst} - {EFD_Tabelas.tabela_cst_icms[codigo_cst]}'
 		except:
 			return codigo_cst
 	
@@ -225,16 +203,18 @@ class EFD_Contrib_Info(ArquivoDigital):
 	myDict = {}
 	for col in sorted(set(registros_totais + colunas)):
 		
-		match_linha = re.search('^Linhas', col, flags=re.IGNORECASE)
-		match_data  = re.search('^DT_|Data', col, flags=re.IGNORECASE)
-		match_chave = re.search('^CHV_|Chave Eletrônica', col, flags=re.IGNORECASE)
-		match_ncm   = re.search('COD_NCM', col, flags=re.IGNORECASE)
-		match_cnpj  = re.search('CNPJ', col, flags=re.IGNORECASE)
-		match_cpf   = re.search('CPF',  col, flags=re.IGNORECASE)
-		match_cst   = re.search('^CST|CST Código da Situação Tributária', col, flags=re.IGNORECASE)
-		match_nbc   = re.search('NAT_BC_CRED', col, flags=re.IGNORECASE)
-		match_tipo  = re.search('TIPO_ITEM', col, flags=re.IGNORECASE)
-		match_mod   = re.search('COD_MOD', col, flags=re.IGNORECASE)
+		match_linha = re.search(r'^Linhas', col, flags=re.IGNORECASE)
+		match_data  = re.search(r'^DT_|Data', col, flags=re.IGNORECASE)
+		match_chave = re.search(r'^CHV_|Chave Eletrônica', col, flags=re.IGNORECASE)
+		match_ncm   = re.search(r'COD_NCM', col, flags=re.IGNORECASE)
+		match_cnpj  = re.search(r'CNPJ', col, flags=re.IGNORECASE)
+		match_cpf   = re.search(r'CPF',  col, flags=re.IGNORECASE)
+		match_nbc   = re.search(r'NAT_BC_CRED', col, flags=re.IGNORECASE)
+		match_tipo  = re.search(r'TIPO_ITEM', col, flags=re.IGNORECASE)
+		match_mod   = re.search(r'COD_MOD', col, flags=re.IGNORECASE)
+
+		match_cst_contib = re.search(r'^CST_(PIS|COFINS)|CST Código da Situação Tributária', col, flags=re.IGNORECASE)
+		match_cst_icms   = re.search(r'^CST_ICMS', col, flags=re.IGNORECASE)
 		
 		myDict[col] = identidade
 		
@@ -242,49 +222,53 @@ class EFD_Contrib_Info(ArquivoDigital):
 		if match_linha:
 			myDict[col] = formatar_linhas		
 		elif match_data:
-			myDict[col] = formatar_data
+			myDict[col] = CampoData.formatar
 		elif match_chave:
-			myDict[col] = formatar_chave
+			myDict[col] = CampoChaveEletronica.formatar
 		elif match_ncm:
-			myDict[col] = formatar_ncm
-		elif match_cst:
-			myDict[col] = formatar_cst
+			myDict[col] = CampoNCM.formatar
 		elif match_nbc:
 			myDict[col] = formatar_nbc
 		elif match_tipo:
 			myDict[col] = formatar_tipo
 		elif match_mod:
 			myDict[col] = formatar_mod
+		elif match_cst_contib:
+			myDict[col] = formatar_cst_contrib
+		elif match_cst_icms:
+			myDict[col] = formatar_cst_icms
 		
 		if match_cnpj and match_cpf:
-			myDict[col] = formatar_cnpj_cpf		
+			myDict[col] = CampoCPFouCNPJ.formatar
 		elif match_cnpj:
-			myDict[col] = formatar_cnpj
+			myDict[col] = CampoCNPJ.formatar
 		elif match_cpf:
-			myDict[col] = formatar_cpf
+			myDict[col] = CampoCPF.formatar
 	
 	if False:
 		for idx, key in enumerate(myDict.keys(),1):
 			print(f'{key:>40}: [{idx:>2}] {myDict[key]}')
 	
-	@staticmethod
-	def formatar_valor(nome,val):
-		'''
+	def formatar_valor(self,nome,val):
+		"""
 		Evitar n repetições de 'if condicao_j then A_j else B_j' tal que 1 <= j <= n, usar dicionário: myDict[key] = funtion_key(value)
 		Better optimization technique using if/else or dictionary
 		A series of if/else statement which receives the 'string' returns the appropriate function for it. (Around 40-50 if/else statements).
 		A dictionary maintaining the key-value pair. key as strings, and values as the function objects, and one main function to search and return the function object.
-		'''
+		"""
 		# https://stackoverflow.com/questions/11445226/better-optimization-technique-using-if-else-or-dictionary
 		# https://softwareengineering.stackexchange.com/questions/182093/why-store-a-function-inside-a-python-dictionary/182095
 		# https://stackoverflow.com/questions/9168340/using-a-dictionary-to-select-function-to-execute
 		try:
-			val_formated = __class__.myDict[nome](val)
+			# https://stackoverflow.com/questions/25577578/access-class-variable-from-instance
+			# val_formated = self.__class__.myDict[nome](val)
+			val_formated = type(self).myDict[nome](val)
 		except:
 			val_formated = val
 		#print(f'nome = {nome} ; val = {val} ; val_formated = {val_formated}')
 		return val_formated
 	
+	# https://stackoverflow.com/questions/25577578/access-class-variable-from-instance
 	def cadastro_do_participante(self,sped_efd):
 		"""
 		Registro 0150: Tabela de Cadastro do Participante
@@ -305,7 +289,7 @@ class EFD_Contrib_Info(ArquivoDigital):
 				if campo.nome == 'COD_PART':
 					codigo_do_participante = valor
 					info[codigo_do_participante] = {}
-				if nome in __class__.registros_de_cadastro_do_participante and codigo_do_participante is not None:
+				if nome in type(self).registros_de_cadastro_do_participante and codigo_do_participante is not None:
 					info[codigo_do_participante][nome] = valor
 		return info
 
@@ -327,7 +311,7 @@ class EFD_Contrib_Info(ArquivoDigital):
 				if campo.nome == 'COD_ITEM':
 					codigo_do_item = valor
 					info[codigo_do_item] = {}
-				if campo.nome in __class__.registros_de_identificacao_do_item and codigo_do_item is not None:
+				if campo.nome in type(self).registros_de_identificacao_do_item and codigo_do_item is not None:
 					info[codigo_do_item][campo.nome] = valor
 		return info
 
@@ -351,7 +335,7 @@ class EFD_Contrib_Info(ArquivoDigital):
 					info[codigo_do_item] = {}
 			for campo in registro.campos:
 				valor = registro.valores[campo.indice]
-				if campo.nome in __class__.registros_de_plano_de_contas and codigo_do_item is not None:
+				if campo.nome in type(self).registros_de_plano_de_contas and codigo_do_item is not None:
 					info[codigo_do_item][campo.nome] = valor
 		return info
 
@@ -377,7 +361,7 @@ class EFD_Contrib_Info(ArquivoDigital):
 			
 			valor = registro.valores[campo.indice]
 			
-			if campo.nome in __class__.colunas:
+			if campo.nome in type(self).colunas:
 				info_de_abertura[nivel][codigo_cst][valor_item][valor_base][campo.nome] = valor	
 			if campo.nome == 'DT_INI':
 					ddmmaaaa = registro.valores[campo.indice]
@@ -387,7 +371,7 @@ class EFD_Contrib_Info(ArquivoDigital):
 			if campo.nome == 'DT_FIN':
 					info_de_abertura[nivel][codigo_cst][valor_item][valor_base]['Data de Execução'] = valor
 			if self.verbose:
-				valor_formatado = __class__.formatar_valor(nome=campo.nome, val=valor)
+				valor_formatado = self.formatar_valor(nome=campo.nome, val=valor)
 				print(f'campo.indice = {campo.indice:>2} ; campo.nome = {campo.nome:>22} ; registro.valores[{campo.indice:>2}] = {valor:<50} ; valor_formatado = {valor_formatado}')		
 		
 		print() if self.verbose else 0
@@ -395,15 +379,16 @@ class EFD_Contrib_Info(ArquivoDigital):
 		return info_de_abertura
 	
 	def imprimir_informacoes_linha_a_linha(self,sped_efd,output_filename):
-		'''
+		"""
 		Imprimir a título de aprendizagem
 		Observar as sequências de informações dos registros dos blocos
-		'''
-		my_regex = "^[ABCDFI]" # Ler apenas os blocos A, B, C, D, F e I.
+		"""
+		my_regex = r'^[A-Z]' # Ler os blocos da A a Z.
+
 		# https://docs.python.org/3/library/csv.html
-		with open(output_filename, 'w', newline='') as csvfile:
+		with open(output_filename, 'w', newline='', encoding='utf-8', errors='ignore') as csvfile:
 			writer = csv.writer(csvfile, delimiter=';')
-			writer.writerow(__class__.colunas) # imprimir nomes das colunas
+			writer.writerow(type(self).colunas) # imprimir nomes das colunas
 			
 			for key in sped_efd._blocos.keys():
 				
@@ -416,11 +401,8 @@ class EFD_Contrib_Info(ArquivoDigital):
 				
 				for registro in bloco.registros:
 					
-					REG = registro.valores[1]
-					nivel = registro.nivel
-					
 					info = {}
-					for coluna in __class__.colunas:
+					for coluna in type(self).colunas:
 						info[coluna] = ''
 						if coluna in self.info_de_abertura[0]['']['']:
 							info[coluna] = self.info_de_abertura[0][''][''][coluna]
@@ -429,13 +411,13 @@ class EFD_Contrib_Info(ArquivoDigital):
 						
 						valor = registro.valores[campo.indice]
 						
-						if campo.nome in __class__.colunas:
+						if campo.nome in type(self).colunas:
 							info[campo.nome] = valor
-						if campo.nome in __class__.registros_de_valor:
+						if campo.nome in type(self).registros_de_valor:
 							info['Valor do Item'] = valor
-						if campo.nome in __class__.registros_de_chave_eletronica:
+						if campo.nome in type(self).registros_de_chave_eletronica:
 							info['Chave Eletrônica'] = valor
-						if campo.nome in __class__.registros_de_base_de_calculo:
+						if campo.nome in type(self).registros_de_base_de_calculo:
 							info['Valor da Base de Cálculo'] = valor
 							
 					writer.writerow( info.values() )
@@ -447,15 +429,15 @@ class EFD_Contrib_Info(ArquivoDigital):
 						break
 	
 	def adicionar_informacoes(self,dict_info):
-		'''
+		"""
 		Adicionar informações em dict_info
 		Formatar alguns de seus campos com o uso de tabelas ou funções
-		'''
+		"""
 		dict_info['Arquivo da SPED EFD'] = self.basename
-		dict_info['Linhas'] = next(__class__.contador_de_linhas)
+		dict_info['Linhas'] = next(type(self).contador_de_linhas)
 
 		# re.search: find something anywhere in the string and return a match object.
-		if re.search('\d{1,2}', dict_info['CST Código da Situação Tributária']): # em perl: if (cst =~ /\d{1,2}/)
+		if re.search(r'\d{1,2}', dict_info['CST Código da Situação Tributária']): # em perl: if (cst =~ /\d{1,2}/)
 			cst  = int(dict_info['CST Código da Situação Tributária'])
 			if 1 <= cst <= 49:
 				dict_info['Tipo de Operação'] = 'Saída'
@@ -463,66 +445,73 @@ class EFD_Contrib_Info(ArquivoDigital):
 				dict_info['Tipo de Operação'] = 'Entrada'
 		
 		# adicionar informação de NAT_BC_CRED para os créditos (50 <= cst <= 66) quando houver informação do CFOP e NAT_BC_CRED estiver vazio.
-		if (len(dict_info['NAT_BC_CRED']) == 0 and re.search('\d{4}', dict_info['CFOP'])
-			#and ( re.search('[1-9]', dict_info['ALIQ_PIS']) or re.search('[1-9]', dict_info['ALIQ_COFINS']) ) # aliq_cofins > 0
-			and re.search('\d{1,2}', dict_info['CST Código da Situação Tributária'])):
+		if (len(dict_info['NAT_BC_CRED']) == 0 and re.search(r'\d{4}', dict_info['CFOP'])
+			#and ( re.search(r'[1-9]', dict_info['ALIQ_PIS']) or re.search(r'[1-9]', dict_info['ALIQ_COFINS']) ) # aliq_cofins > 0
+			and re.search(r'\d{1,2}', dict_info['CST Código da Situação Tributária'])):
 			cfop = str(dict_info['CFOP'])
 			cst  = int(dict_info['CST Código da Situação Tributária'])
 			if 50 <= cst <= 66:
-				dict_info['NAT_BC_CRED'] = __class__.natureza_da_bc_dos_creditos(cfop)
+				dict_info['NAT_BC_CRED'] = type(self).natureza_da_bc_dos_creditos(cfop)
 		
 		# Índice de Origem do Crédito: Leia os comentários do 'Registro M100: Crédito de PIS/Pasep Relativo ao Período'.
 		# Os códigos vinculados à importação (108, 208 e 308) são obtidos através da informação de CFOP iniciado em 3 (quando existente) ou pelo campo IND_ORIG_CRED nos demais casos.
 		# O registro C100 possui o campo IND_OPER. IND_OPER igual a "0" (zero) indica operação de entrada. Veja os comentários do Registro C120.
 		indicador_de_origem = 'Mercado Interno' # Default Value: 0 - Mercado Interno ; 1 - Mercado Externo (Importação).
-		if len(dict_info['IND_ORIG_CRED']) == 0 and re.search('^3\d{3}', dict_info['CFOP']):
+		if len(dict_info['IND_ORIG_CRED']) == 0 and re.search(r'^3\d{3}', dict_info['CFOP']):
 			indicador_de_origem = 'Mercado Externo (Importação)'
 		dict_info['IND_ORIG_CRED'] = indicador_de_origem
 
 		# adicionar informação de cadastro do participante obtido do Registro 0150
 		# info_do_participante[codigo_do_participante][campo] = descricao
 		codigo_do_participante = dict_info['COD_PART']
-		if codigo_do_participante != '':
+		if codigo_do_participante != '' and codigo_do_participante in self.info_do_participante:
 			for campo in self.info_do_participante[codigo_do_participante]:
 				dict_info[campo] = self.info_do_participante[codigo_do_participante][campo]
 		
 		# adicionar informação de identificação do item obtido do Registro 0200
 		# info_do_item[codigo_do_item][campo] = descricao
 		codigo_do_item = dict_info['COD_ITEM']
-		if codigo_do_item != '':
+		if codigo_do_item != '' and codigo_do_item in self.info_do_item:
 			for campo in self.info_do_item[codigo_do_item]:
 				dict_info[campo] = self.info_do_item[codigo_do_item][campo]
 		
 		# adicionar informação do plano de contas obtido do Registro 0500
 		codigo_da_conta = dict_info['COD_CTA']
 		# info_da_conta[codigo_da_conta][campo] = descricao
-		if codigo_da_conta != '':
+		if codigo_da_conta != '' and codigo_da_conta in self.info_da_conta:
 			for campo in self.info_da_conta[codigo_da_conta]:
 				val = str(self.info_da_conta[codigo_da_conta][campo])
-				if campo == 'COD_NAT_CC' and re.search('\d{1,2}', val):
+				if campo == 'COD_NAT_CC' and re.search(r'\d{1,2}', val):
 					val = val.zfill(2) # val = f'{int(val):02d}'
 					val = val + ' - ' + EFD_Tabelas.tabela_natureza_da_conta[val]
 				dict_info[campo] = val
 		
 		# Ao final, formatar alguns valores dos campos
 		for campo in dict_info.copy():
-			valor_formatado = __class__.formatar_valor(nome=campo, val=dict_info[campo])
+			valor_formatado  = self.formatar_valor(nome=campo, val=dict_info[campo])
 			dict_info[campo] = valor_formatado
 		
 		return dict_info
 	
 	def imprimir_informacoes_da_efd(self,sped_efd,output_filename):
 		
-		my_regex = "^[ABCDFI]" # Ler apenas os blocos A, B, C, D, F e I.
+		my_regex = r'^[A-Z]' # Ler os blocos da A a Z.
 		
 		campos_necessarios = ['CST_PIS', 'CST_COFINS', 'VL_BC_PIS', 'VL_BC_COFINS']
 		# Bastam os seguintes campos, desde que os registros de PIS/PASEP ocorram sempre anteriores aos registros de COFINS:
 		# campos_necessarios = ['CST_COFINS', 'VL_BC_COFINS']
+
+		if self.efd_tipo == 'efd_icms_ipi':
+			campos_necessarios = ['CST_ICMS', 'VL_BC_ICMS']
 		
 		# https://docs.python.org/3/library/csv.html
-		with open(output_filename, 'w', newline='') as csvfile:
+		with open(output_filename, 'w', newline='', encoding='utf-8', errors='ignore') as csvfile:
+            
+			#linha = ';'.join(str(val) for val in type(self).colunas)
+			#csvfile.write(linha + '\n') # imprimir nomes das colunas
+
 			writer = csv.writer(csvfile, delimiter=';')
-			writer.writerow(__class__.colunas) # imprimir nomes das colunas
+			writer.writerow(type(self).colunas) # imprimir nomes das colunas
 			
 			for key in sped_efd._blocos.keys():
 				
@@ -557,11 +546,11 @@ class EFD_Contrib_Info(ArquivoDigital):
 					valor_base = ''		
 					
 					for campo in registro.campos:
-						if campo.nome in __class__.registros_de_codigo_cst:
+						if campo.nome in type(self).registros_de_codigo_cst:
 							codigo_cst = registro.valores[campo.indice]
-						if campo.nome in __class__.registros_de_base_de_calculo:
+						if campo.nome in type(self).registros_de_base_de_calculo:
 							valor_base = registro.valores[campo.indice]
-						if campo.nome in __class__.registros_de_valor: 
+						if campo.nome in type(self).registros_de_valor: 
 							valor_item = registro.valores[campo.indice]
 					
 					if self.verbose:
@@ -586,30 +575,34 @@ class EFD_Contrib_Info(ArquivoDigital):
 					
 					for campo in registro.campos:
 						
-						valor = registro.valores[campo.indice]
+						try:
+							valor = registro.valores[campo.indice]
+						except:
+							valor = f'{REG}[{campo.indice}:{campo.nome}] sem valor definido'
+							print(valor)
 						
 						if self.verbose:
-							valor_formatado = __class__.formatar_valor(nome=campo.nome, val=valor)
+							valor_formatado = self.formatar_valor(nome=campo.nome, val=valor)
 							print(f'campo.indice = {campo.indice:>2} ; campo.nome = {campo.nome:>22} ; registro.valores[{campo.indice:>2}] = {valor:<50} ; valor_formatado = {valor_formatado}')
 						
-						if campo.nome in __class__.colunas:
+						if campo.nome in type(self).colunas:
 							info[nivel][codigo_cst][valor_item][valor_base][campo.nome] = valor
 						
 						# Informar os campos em registros_de_data_emissao na coluna 'Data de Emissão'.
-						if campo.nome in __class__.registros_de_data_emissao:
+						if campo.nome in type(self).registros_de_data_emissao:
 							info[nivel][codigo_cst][valor_item][valor_base]['Data de Emissão'] = valor
 						# Informar os campos em registros_de_data_execucao na coluna 'Data de Execução'.
-						if campo.nome in __class__.registros_de_data_execucao:
+						if campo.nome in type(self).registros_de_data_execucao:
 							info[nivel][codigo_cst][valor_item][valor_base]['Data de Execução'] = valor
 						# Informar os campos de chave eletrônica de 44 dígitos na coluna 'Chave Eletrônica'.
-						if campo.nome in __class__.registros_de_chave_eletronica:
+						if campo.nome in type(self).registros_de_chave_eletronica:
 							info[nivel][codigo_cst][valor_item][valor_base]['Chave Eletrônica'] = valor
 						# Informar os campos CST_PIS e CST_COFINS na coluna 'CST Código da Situação Tributária'.
-						if campo.nome in __class__.registros_de_codigo_cst:
+						if campo.nome in type(self).registros_de_codigo_cst:
 							info[nivel][codigo_cst][valor_item][valor_base][campo.nome] = valor
 							info[nivel][codigo_cst][valor_item][valor_base]['CST Código da Situação Tributária'] = valor
 						# Informar os campos VL_BC_PIS e VL_BC_COFINS na coluna 'Valor da Base de Cálculo'.
-						if campo.nome in __class__.registros_de_base_de_calculo:
+						if campo.nome in type(self).registros_de_base_de_calculo:
 							info[nivel][codigo_cst][valor_item][valor_base][campo.nome] = valor
 							info[nivel][codigo_cst][valor_item][valor_base]['Valor da Base de Cálculo'] = valor				
 					
@@ -624,7 +617,7 @@ class EFD_Contrib_Info(ArquivoDigital):
 						# Zen of Python: Flat is better than nested.
 						flattened_info = {} # eliminar os diversos niveis e trazer todas as informações para apenas uma dimensão.
 						
-						for coluna in __class__.colunas:
+						for coluna in type(self).colunas:
 							flattened_info[coluna] = '' # atribuir valor inicial para todas as colunas
 							
 							if coluna in info[nivel][codigo_cst][valor_item][valor_base]:
@@ -652,6 +645,9 @@ class EFD_Contrib_Info(ArquivoDigital):
 						
 						# Adicionar informações em flattened_info ou formatar alguns de seus campos com o uso de tabelas ou funções
 						flattened_info = self.adicionar_informacoes(flattened_info)
+                        
+						#linha = ';'.join(str(val) for val in flattened_info.values())
+						#csvfile.write(linha + '\n')
 						
 						writer.writerow( flattened_info.values() )
 					
@@ -663,73 +659,91 @@ class EFD_Contrib_Info(ArquivoDigital):
 
 		print(f"Gerado o arquivo csv: '{output_filename}'.")
 
-if __name__ == '__main__':
 
-	from efd_read_dir import ReadFiles, Total_Execution_Time
-	
-	dir_path = os.getcwd() # CurrentDirectory
-	extensao = 'txt'
-	
-	lista_de_arquivos = ReadFiles(root_path = dir_path, extension = extensao)
-	
-	#print(f'{lista_de_arquivos.find_all_files = }')
-	
-	arquivos_efd = list(lista_de_arquivos.find_all_efd_contrib) # SPED EFD Contrib:
-	
-	for index,file_path in enumerate(arquivos_efd,1):
-		print( f"{index:>6}: {file_path}")
-		for attribute, value in lista_de_arquivos.get_file_info(file_path).items():
-			print(f'{attribute:>25}: {value}')
-	
-	indice_do_arquivo = None
-	
-	if len(arquivos_efd) > 1:
-		while indice_do_arquivo is None:
-			my_input = input(f"\nFavor, digite o número do arquivo da EFD Contribuições (1 a {len(arquivos_efd)}): ")
-			try:
-				my_input = int(my_input)
-				if 1 <= my_input <= len(arquivos_efd):
-					indice_do_arquivo = my_input - 1
-			except:
-				print(f"-->Opção incorreta: '{my_input}'.")
-				print(f"-->Digite um número inteiro entre 1 e {len(arquivos_efd)}.")
-	elif len(arquivos_efd) == 1:
-		indice_do_arquivo = 0
-	else:
-		dir_path_exemplo = '/home/claudio/Documentos/'
-		print(f"\nA lista de arquivos de SPED Contribuições é obtida a partir de:\n")
-		print(f"\tlista_de_arquivos = ReadFiles(root_path = dir_path, extension = extensao).\n")
-		print(f"tal que:\n")
-		print(f"\tdir_path = '{dir_path}' e extensao = '{extensao}'.\n")
-		print(f"Nenhum arquivo de EFD Contribuções foi encontrado no diretório definido acima.")
-		print(f"Se as EFDs estão localizadas, por exemplo, no diretório '{dir_path_exemplo}',")
-		print(f"então altere a variável 'dir_path' para o diretório que contenha as EFDs:")
-		print(f"\n\tdir_path = '{dir_path_exemplo}'\n")
-		print(f"Outra alternativa é copiar este arquivo '{__file__}' para o diretório que contenha as EFDs.")
-		print(f"Em seguida, executar no terminal:\n")
-		print(f"\t python {__file__} \n")
-		exit()
+	def convert_csv_to_xlsx(self, imput_csv, output_excel):
 
-	# arquivo EFD Contribuições
-	file_path = arquivos_efd[indice_do_arquivo]
-	codif = lista_de_arquivos.informations[file_path]['codificação']
-	
-	print(f"\nFoi selecionado o arquivo {indice_do_arquivo + 1}: '{file_path}'\n")
-	input("Tecle Enter para gerar arquivo .csv com informações da EFD ")
-	print()
-	
-	start = time()
-	
-	efd = EFD_Contrib_Info(file_path, encoding=codif, verbose=False)
-	
-	#print(f'\n efd.basename = {efd.basename}')
-	#print(f'\n efd.colunas = {efd.colunas}')
-	#print(f'\n efd.natureza_da_bc_dos_creditos("1556") = {efd.natureza_da_bc_dos_creditos("1556")}')
-	#print(f'\n efd.formatar_valor("CNPJ","12345678000199") = {efd.formatar_valor("CNPJ","12345678000199")}\n')
-	
-	efd.imprimir_informacoes
+		# Create an new Excel file and add a worksheet.
+		workbook = xlsxwriter.Workbook(output_excel)
+		worksheet = workbook.add_worksheet('Itens de Docs Fiscais')
+		workbook.set_properties({'comments': 'Created with Python and XlsxWriter'})
+		
+		# definindo a altura da primeira coluna, row_index == 0
+		worksheet.set_row(0, 30)
 
-	end = time()
-	print(f'\nTotal Execution Time: {Total_Execution_Time(start,end)} \n')
+		# Freeze pane on the top row.
+		worksheet.freeze_panes(1, 0)
 
+		# Set up some formatting
+		header_format = workbook.add_format({'align':'center', 'valign':'vcenter', 'bg_color':'#C5D9F1', 'text_wrap': True, 'font_size':10}) 
+		date_format   = workbook.add_format({'num_format': 'dd/mm/yyyy'})
+		center_format = workbook.add_format({'align':'center'})
 
+		# Add a number format for cells
+		numero_0d = workbook.add_format({'num_format': '0', 'align':'center'})
+		numero_2d = workbook.add_format({'num_format': '#,##0.00'})
+		numero_4d = workbook.add_format({'num_format': '#,##0.0000', 'align':'center'})
+
+		# First we find the length of the header column
+		largura_min = 6 
+		largura_max = [len(c) + largura_min for c in type(self).colunas]
+        
+		with open(imput_csv, 'r', encoding='utf-8', errors='ignore') as file:
+        
+			reader = csv.reader(file, delimiter=';')
+			for row_index, row in enumerate(reader):
+
+				# nomes das colunas
+				if row_index == 0:
+					worksheet.write_row(row_index, 0, tuple(type(self).colunas), header_format)
+					continue
+
+				for column_index, cell in enumerate(row):
+
+					nome_da_coluna = type(self).colunas[column_index]
+
+					# reter largura máxima
+					if len(cell) > largura_max[column_index]:
+						largura_max[column_index] = len(cell)
+					
+					match_valor    = re.search(r'VL|Valor', nome_da_coluna, flags=re.IGNORECASE)
+					match_aliquota = re.search(r'Aliq', nome_da_coluna, flags=re.IGNORECASE)
+					match_nnatural = re.search(r'Linha|NUM_', nome_da_coluna, flags=re.IGNORECASE)
+					match_data     = re.search(r'Data|DT_', nome_da_coluna, flags=re.IGNORECASE)
+					match_center   = re.search(r'Período|Operação|REG', nome_da_coluna, flags=re.IGNORECASE)
+
+					if len(cell) > 0 and (match_nnatural or match_valor or match_aliquota):
+						cell = cell.replace( '.', ''  ) # 4.218.239,19 --> 4218239,19
+						cell = cell.replace( ',', '.' ) #   4218239,19 --> 4218239.19
+
+						num_real = float(cell)
+
+						if match_nnatural:
+							worksheet.write_number(row_index, column_index, num_real, numero_0d)
+						if match_valor:
+							worksheet.write_number(row_index, column_index, num_real, numero_2d)
+						if match_aliquota:
+							worksheet.write_number(row_index, column_index, num_real, numero_4d)
+					
+					elif len(cell) > 0 and match_data:
+						date_time = datetime.strptime(cell, "%d/%m/%Y") # dd/mm/aaaa
+						worksheet.write_datetime(row_index, column_index, date_time, date_format)
+
+					elif len(cell) > 0 and match_center:
+						worksheet.write(row_index, column_index, cell, center_format)
+
+					else:
+						# Write cell with row/column notation.
+						worksheet.write(row_index, column_index, cell)
+		
+		# Ajustar largura das colunas com os valores máximos
+		for i, width in enumerate(largura_max):
+			if width > 120: # largura máxima
+				width = 120
+			worksheet.set_column(i, i, width)
+		
+		# Set the autofilter( $first_row, $first_col, $last_row, $last_col )
+		worksheet.autofilter(0, 0, 0, len(largura_max) - 1)
+
+		workbook.close()
+
+		print(f"Gerado o arquivo XLSX Excel: '{output_excel}'.")

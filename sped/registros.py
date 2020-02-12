@@ -80,10 +80,11 @@ class Registro(object):
                     if self._valores[c.indice] != c.valor:
                         raise CampoError(self, c.nome)
             # Inicializar contador na leitura do registro de abertura '0000'
+            # if self.__class__.__name__ == 'Registro0000':
             if self._valores[1] == '0000':
-                __class__.contador_de_linhas = itertools.count(1)
+                Registro.contador_de_linhas = itertools.count(1)
             # Informação do número da linha do arquivo sped
-            self._numero_da_linha = next(__class__.contador_de_linhas)
+            self._numero_da_linha = next(Registro.contador_de_linhas)
 
     @property
     def numero_da_linha(self):

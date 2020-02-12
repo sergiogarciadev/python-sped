@@ -196,6 +196,14 @@ class CampoData(Campo):
         else:
             raise FormatoInvalidoError(registro, self.nome)
 
+    @staticmethod
+    def formatar(data_in):
+        dt = datetime.strptime(data_in, "%d%m%Y") # ddmmaaaa
+        #data_out =  dt.isoformat('T')
+        #data_out = dt.strftime('%x %X') # excel date format
+        data_out = dt.strftime("%d/%m/%Y")
+        return data_out
+
 
 class CampoRegex(Campo):
     def __init__(self, indice, nome, obrigatorio=False, regex=None):
@@ -240,6 +248,16 @@ class CampoCNPJ(Campo):
 
         return True
 
+    @staticmethod
+    def formatar(cnpj):
+        mensagem_de_validacao = ''
+        if len(cnpj) >= 1:
+            if not CampoCNPJ.validar(cnpj):
+                mensagem_de_validacao = ' : dígito verificador do cnpj inválido!'
+            if len(cnpj) == 14:
+                cnpj = "%s.%s.%s/%s-%s" % (cnpj[0:2],cnpj[2:5],cnpj[5:8],cnpj[8:12],cnpj[12:14])
+        return cnpj + mensagem_de_validacao
+
 
 class CampoCPF(Campo):
     @staticmethod
@@ -266,6 +284,16 @@ class CampoCPF(Campo):
             return False
 
         return True
+    
+    @staticmethod
+    def formatar(cpf):
+        mensagem_de_validacao = ''
+        if len(cpf) >= 1:
+            if not CampoCPF.validar(cpf):
+                mensagem_de_validacao = ' : dígito verificador do cpf inválido!'
+            if len(cpf) == 11:
+                cpf = "%s.%s.%s-%s" % (cpf[0:3],cpf[3:6],cpf[6:9],cpf[9:11])
+        return cpf + mensagem_de_validacao
 
 
 class CampoCPFouCNPJ(Campo):
@@ -277,13 +305,28 @@ class CampoCPFouCNPJ(Campo):
             return CampoCPF.validar(valor)
         return False
 
+    @staticmethod
+    def formatar(digt):
+        mensagem_de_validacao = ''
+        if len(digt) >= 1:
+            if len(digt) == 11 and not CampoCPF.validar(digt):
+                mensagem_de_validacao = ' : dígito verificador do cpf inválido!'
+            elif len(digt) == 14 and not CampoCNPJ.validar(digt):
+                mensagem_de_validacao = ' : dígito verificador do cnpj inválido!'
+
+            if len(digt) == 11:
+                digt = "CPF %s.%s.%s-%s" % (digt[0:3],digt[3:6],digt[6:9],digt[9:11])
+            elif len(digt) == 14:
+                digt = "CNPJ %s.%s.%s/%s-%s" % (digt[0:2],digt[2:5],digt[5:8],digt[8:12],digt[12:14])
+        return digt + mensagem_de_validacao
+
 
 # Fonte: 'NFe Manual_de_Orientacao_Contribuinte_v_6.00.pdf', pg 144.
 # 5.4 Cálculo do Dígito Verificador da Chave de Acesso da NF-e
 class CampoChaveEletronica(Campo):
     @staticmethod
     def validar(valor):
-        if not re.search('^\d{44}$', str(valor)):
+        if not re.search(r'^\d{44}$', str(valor)):
             return False
 
         chave = [int(digito) for digito in valor]
@@ -306,3 +349,20 @@ class CampoChaveEletronica(Campo):
 
         return CampoCNPJ.validar(cnpj)
 
+    @staticmethod
+    def formatar(chave):
+        mensagem_de_validacao = ''
+        if len(chave) >= 1:
+            if not CampoChaveEletronica.validar(chave):
+                mensagem_de_validacao = ' : dígito verificador da chave inválido!'
+            if len(chave) == 44:
+                chave = "%s.%s.%s.%s.%s.%s.%s.%s-%s" % (chave[0:2],chave[2:6],chave[6:20],chave[20:22],chave[22:25],chave[25:34],chave[34:35],chave[35:43],chave[43:44])
+        return chave + mensagem_de_validacao
+
+
+class CampoNCM(Campo):
+    @staticmethod
+    def formatar(ncm):
+        if len(ncm) == 8:
+            ncm = "%s.%s.%s" % (ncm[0:4],ncm[4:6],ncm[6:8])
+        return ncm

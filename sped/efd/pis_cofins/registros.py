@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
 
+from ...registros import Registro
 from ...campos import Campo
-from ...campos import CampoAlfanumerico
-from ...campos import CampoCNPJ
 from ...campos import CampoData
 from ...campos import CampoFixo
 from ...campos import CampoNumerico
+from ...campos import CampoAlfanumerico
 from ...campos import CampoRegex
-from ...registros import Registro
+from ...campos import CampoCNPJ
+from ...campos import CampoCPF
+from ...campos import CampoCPFouCNPJ
+from ...campos import CampoChaveEletronica
+
 
 class Registro0000(Registro):
     """
@@ -72,7 +76,7 @@ class Registro0100(Registro):
     campos = [
         CampoFixo(1, 'REG', '0100'),
         Campo(2, 'NOME', obrigatorio=True),
-        Campo(3, 'CPF', obrigatorio=True),
+        CampoCPF(3, 'CPF', obrigatorio=True),
         Campo(4, 'CRC', obrigatorio=True),
         CampoCNPJ(5, 'CNPJ'),
         Campo(6, 'CEP'),
@@ -172,7 +176,7 @@ class Registro0150(Registro):
         Campo(3, 'NOME', obrigatorio=True),
         Campo(4, 'COD_PAIS', obrigatorio=True),
         CampoCNPJ(5, 'CNPJ'),
-        Campo(6, 'CPF'),
+        CampoCPF(6, 'CPF'),
         Campo(7, 'IE'),
         Campo(8, 'COD_MUN'),
         Campo(9, 'SUFRAMA'),
@@ -380,7 +384,7 @@ class RegistroA100(Registro):
         Campo(6, 'SER'),
         Campo(7, 'SUB'),
         Campo(8, 'NUM_DOC', obrigatorio=True),
-        Campo(9, 'CHV_NFSE'),
+        CampoChaveEletronica(9, 'CHV_NFSE'),
         CampoData(10, 'DT_DOC', obrigatorio=True),
         CampoData(11, 'DT_EXE_SERV', obrigatorio=True),
         CampoNumerico(12, 'VL_DOC'),
@@ -513,7 +517,7 @@ class RegistroC100(Registro):
         Campo(6, 'COD_SIT',  obrigatorio=True),
         Campo(7, 'SER'),
         Campo(8, 'NUM_DOC', obrigatorio=True),
-        Campo(9, 'CHV_NFE'),
+        CampoChaveEletronica(9, 'CHV_NFE'),
         CampoData(10, 'DT_DOC', obrigatorio=True),
         CampoData(11, 'DT_E_S'),
         CampoNumerico(12, 'VL_DOC', obrigatorio=True),
@@ -583,16 +587,16 @@ class RegistroC170(Registro):
     """
     campos = [
         CampoFixo(1, 'REG', 'C170'),
-        Campo(2, 'NUM_ITEM', obrigatorio=True),
+        CampoNumerico(2, 'NUM_ITEM', obrigatorio=True),
         Campo(3, 'COD_ITEM', obrigatorio=True),
         Campo(4, 'DESCR_COMPL'),
-        Campo(5, 'QTD'),
+        CampoNumerico(5, 'QTD'),
         Campo(6, 'UNID'),
         CampoNumerico(7, 'VL_ITEM', obrigatorio=True),
         CampoNumerico(8, 'VL_DESC'),
         Campo(9, 'IND_MOV'),
-        Campo(10, 'CST_ICMS'),
-        Campo(11, 'CFOP', obrigatorio=True),
+        CampoNumerico(10, 'CST_ICMS'),
+        CampoNumerico(11, 'CFOP', obrigatorio=True),
         Campo(12, 'COD_NAT'),
         CampoNumerico(13, 'VL_BC_ICMS'),
         CampoNumerico(14, 'ALIQ_ICMS'),
@@ -606,16 +610,16 @@ class RegistroC170(Registro):
         CampoNumerico(22, 'VL_BC_IPI'),
         CampoNumerico(23, 'ALIQ_IPI'),
         CampoNumerico(24, 'VL_IPI'),
-        Campo(25, 'CST_PIS', obrigatorio=True),
+        CampoNumerico(25, 'CST_PIS', obrigatorio=True),
         CampoNumerico(26, 'VL_BC_PIS'),
         CampoNumerico(27, 'ALIQ_PIS'),
-        Campo(28, 'QUANT_BC_PIS'),
+        CampoNumerico(28, 'QUANT_BC_PIS'),
         CampoNumerico(29, 'ALIQ_PIS_QUANT'),
         CampoNumerico(30, 'VL_PIS'),
-        Campo(31, 'CST_COFINS', obrigatorio=True),
+        CampoNumerico(31, 'CST_COFINS', obrigatorio=True),
         CampoNumerico(32, 'VL_BC_COFINS'),
         CampoNumerico(33, 'ALIQ_COFINS'),
-        Campo(34, 'QUANT_BC_COFINS'),
+        CampoNumerico(34, 'QUANT_BC_COFINS'),
         CampoNumerico(35, 'ALIQ_COFINS_QUANT'),
         CampoNumerico(36, 'VL_COFINS'),
         Campo(37, 'COD_CTA'),
@@ -744,7 +748,7 @@ class RegistroC191(Registro):
     """
     campos = [
         CampoFixo(1, 'REG', 'C191'),
-        Campo(2, 'CNPJ_CPF_PART', obrigatorio=True),
+        CampoCPFouCNPJ(2, 'CNPJ_CPF_PART', obrigatorio=True),
         Campo(3, 'CST_PIS', obrigatorio=True),
         Campo(4, 'CFOP', obrigatorio=True),
         CampoNumerico(5, 'VL_ITEM', obrigatorio=True),
@@ -766,7 +770,7 @@ class RegistroC195(Registro):
     """
     campos = [
         CampoFixo(1, 'REG', 'C195'),
-        Campo(2, 'CNPJ_CPF_PART', obrigatorio=True),
+        CampoCPFouCNPJ(2, 'CNPJ_CPF_PART', obrigatorio=True),
         Campo(3, 'CST_COFINS', obrigatorio=True),
         Campo(4, 'CFOP', obrigatorio=True),
         CampoNumerico(5, 'VL_ITEM', obrigatorio=True),
@@ -878,7 +882,7 @@ class RegistroC395(Registro):
         CampoNumerico(8, 'VL_DOC', obrigatorio=True),
     ]
     
-    nivel = 4
+    nivel = 3
 
 class RegistroC396(Registro):
     """
@@ -1208,9 +1212,9 @@ class RegistroC800(Registro):
         CampoNumerico(6, 'VL_CFE', obrigatorio=True),
         CampoNumerico(7, 'VL_PIS'),
         CampoNumerico(8, 'VL_COFINS'),
-        Campo(9, 'CNPJ_CPF'),
+        CampoCPFouCNPJ(9, 'CNPJ_CPF'),
         Campo(10, 'NR_SAT'),
-        Campo(11, 'CHV_CFE'),
+        CampoChaveEletronica(11, 'CHV_CFE'),
         CampoNumerico(12, 'VL_DESC'),
         CampoNumerico(13, 'VL_MERC'),
         CampoNumerico(14, 'VL_OUT_DA'),
@@ -1396,11 +1400,11 @@ class RegistroD100(Registro):
         Campo(7, 'SER'),
         Campo(8, 'SUB'),
         Campo(9, 'NUM_DOC', obrigatorio=True),
-        Campo(10, 'CHV_CTE'),
+        CampoChaveEletronica(10, 'CHV_CTE'),
         CampoData(11, 'DT_DOC', obrigatorio=True),
         CampoData(12, 'DT_A_P'),
         Campo(13, 'TP_CT-e'),
-        Campo(14, 'CHV_CTE_REF'),
+        CampoChaveEletronica(14, 'CHV_CTE_REF'),
         CampoNumerico(15, 'VL_DOC', obrigatorio=True),
         CampoNumerico(16, 'VL_DESC'),
         Campo(17, 'IND_FRT', obrigatorio=True),
@@ -2117,7 +2121,7 @@ class RegistroF525(Registro):
         CampoFixo(1, 'REG', 'F525'),
         CampoNumerico(2, 'VL_REC', obrigatorio=True),
         Campo(3, 'IND_REC', obrigatorio=True),
-        Campo(4, 'CNPJ_CPF'),
+        CampoCPFouCNPJ(4, 'CNPJ_CPF'),
         Campo(5, 'NUM_DOC'),
         Campo(6, 'COD_ITEM'),
         CampoNumerico(7, 'VL_REC_DET', obrigatorio=True),
@@ -3067,7 +3071,7 @@ class Registro1011(Registro):
     campos = [
         CampoFixo(1, 'REG', '1011'),
         Campo(2, 'REG_REF'),
-        Campo(3, 'CHAVE_DOC'),
+        CampoChaveEletronica(3, 'CHAVE_DOC'),
         Campo(4, 'COD_PART'),
         Campo(5, 'COD_ITEM'),
         CampoData(6, 'DT_OPER', obrigatorio=True),
@@ -3104,6 +3108,34 @@ class Registro1020(Registro):
         Campo(2, 'NUM_PROC', obrigatorio=True),
         Campo(3, 'IND_NAT_ACAO', obrigatorio=True),
         CampoData(4, 'DT_DEC_ADM', obrigatorio=True),
+    ]
+    
+    nivel = 2
+
+class Registro1050(Registro):
+    """
+    Detalhamento de Ajustes de Base de Cálculo – Valores Extra Apuração
+    """
+    campos = [
+        CampoFixo(1, 'REG', '1050'),
+        CampoData(2, 'DT_REF'),
+        Campo(3, 'IND_AJ_BC'),
+        CampoCNPJ(4, 'CNPJ'),
+        CampoNumerico(5, 'VL_AJ_TOT'),
+        CampoNumerico(6, 'VL_AJ_CST01'),
+        CampoNumerico(7, 'VL_AJ_CST02'),
+        CampoNumerico(8, 'VL_AJ_CST03'),
+        CampoNumerico(9, 'VL_AJ_CST04'),
+        CampoNumerico(10, 'VL_AJ_CST05'),
+        CampoNumerico(11, 'VL_AJ_CST06'),
+        CampoNumerico(12, 'VL_AJ_CST07'),
+        CampoNumerico(13, 'VL_AJ_CST08'),
+        CampoNumerico(14, 'VL_AJ_CST09'),
+        CampoNumerico(15, 'VL_AJ_CST49'),
+        CampoNumerico(16, 'VL_AJ_CST99'),
+        Campo(17, 'IND_APROP'),
+        Campo(18, 'NUM_REC'),
+        Campo(19, 'INFO_COMPL'),
     ]
     
     nivel = 2
@@ -3148,7 +3180,7 @@ class Registro1101(Registro):
         Campo(6, 'SUB_SER'),
         Campo(7, 'NUM_DOC'),
         CampoData(8, 'DT_OPER', obrigatorio=True),
-        Campo(9, 'CHV_NFE'),
+        CampoChaveEletronica(9, 'CHV_NFE'),
         CampoNumerico(10, 'VL_OPER', obrigatorio=True),
         Campo(11, 'CFOP'),
         Campo(12, 'NAT_BC_CRED', obrigatorio=True),
@@ -3290,7 +3322,7 @@ class Registro1501(Registro):
         Campo(6, 'SUB_SER'),
         Campo(7, 'NUM_DOC'),
         CampoData(8, 'DT_OPER', obrigatorio=True),
-        Campo(9, 'CHV_NFE'),
+        CampoChaveEletronica(9, 'CHV_NFE'),
         CampoNumerico(10, 'VL_OPER', obrigatorio=True),
         Campo(11, 'CFOP'),
         Campo(12, 'NAT_BC_CRED', obrigatorio=True),

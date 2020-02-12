@@ -41,7 +41,7 @@ class ReadFiles:
 
 	def get_file_extension(self,file_path):
 		# https://stackoverflow.com/questions/541390/extracting-extension-from-filename-in-python
-		filename, file_extension = os.path.splitext(file_path)
+		_, file_extension = os.path.splitext(file_path)
 		return file_extension
 
 	def get_filename(self,file_path):
@@ -54,7 +54,7 @@ class ReadFiles:
 		lines = 0
 		try:
 			with open(file_path, mode='r', encoding="utf-8", errors='ignore') as filename:
-				for line in filename: 
+				for _ in filename: 
 					lines += 1
 		except FileNotFoundError:
 			print('O Arquivo não existe!')
@@ -68,11 +68,11 @@ class ReadFiles:
 		'''Predict a file's encoding using cchardet'''
 		# import cchardet as chardet
 		lines = []
-		my_regex = b"^\|9999\|\d+\|"  # descatar informações após a linha que contém |9999| seguido por dígitos ; b'': binary mode
+		my_regex = rb"^\|9999\|\d+\|"  # descartar informações após a linha que contém |9999| seguido por dígitos ; b'': binary mode
 		with open(file_path, mode='rb') as filename: # mode 'rb': open the file as binary data
 			for line in filename:
 				match_object = re.search(my_regex, line, flags=re.IGNORECASE)
-				if len(lines) > 2**10 or match_object:
+				if len(lines) > 2**8 or match_object:
 					#print(f'{file_path = } ; {line = }')
 					break
 				lines.append(line)
@@ -143,8 +143,8 @@ class ReadFiles:
 					campo_data = campos[ idx_data[indice] ]
 					campo_cnpj = campos[ idx_cnpj[indice] ] # o campo CNPJ deve conter 14 dígitos
 					match_regi = re.search(  '0000', campo_registro)
-					match_cnpj = re.search('(\D|^)\d{14}(\D|$)', campo_cnpj)
-					match_data = re.search( '(\D|^)\d{8}(\D|$)', campo_data)
+					match_cnpj = re.search(r'(\D|^)\d{14}(\D|$)', campo_cnpj)
+					match_data = re.search(r'(\D|^)\d{8}(\D|$)', campo_data)
 					if match_regi and match_cnpj and match_data:
 						self.informations[file_path]['tipo'] = efd_type[indice]
 						self.informations[file_path]['NOME'] = campo_nome
