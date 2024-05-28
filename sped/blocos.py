@@ -24,7 +24,17 @@ class Bloco(object):
 
     @property
     def registros(self):
-        return [self.abertura] + self._registros + [self.encerramento]
+        regs = []
+
+        if self.abertura is not None:
+            regs.append(self.abertura)
+
+        regs = regs + self._registros
+
+        if self.encerramento is not None:
+            regs.append(self.encerramento)
+
+        return regs
 
     def add(self, registro):
         # Não adiciona o registro de abertura e fechamento

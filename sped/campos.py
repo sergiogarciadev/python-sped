@@ -176,6 +176,31 @@ class CampoNumerico(Campo):
         else:
             raise FormatoInvalidoError(registro, self.nome)
 
+class CampoNumerico2(Campo):
+    def __init__(self, indice, nome, obrigatorio=False,
+                 precisao=None):
+        super().__init__(indice, nome, obrigatorio)
+        self._precisao = precisao if precisao is not None else 0
+
+    @property
+    def precisao(self):
+        return self._precisao
+
+    def get(self, registro):
+        valor = super().get(registro)
+        if not valor:
+            return None
+        return Decimal(valor) / 100
+
+    def set(self, registro, valor):
+        if valor is None:
+            valor = 0
+        elif not isinstance(valor, str):
+            valor = round(valor * 100)
+
+        # super().set(registro, format(valor, f'0{self._precisao}'))
+        super().set(registro, str(valor))
+
 
 class CampoData(Campo):
     def __init__(self, indice, nome, obrigatorio=False):

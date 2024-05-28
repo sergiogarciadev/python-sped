@@ -72,6 +72,8 @@ class Registro(object):
                 if isinstance(c, CampoFixo):
                     self._valores[c.indice] = c.valor
         else:
+            if line[0] != '|':
+                line = '|' + line
             self._valores = line.split('|')
             for c in self.campos:
                 if isinstance(c, CampoFixo):
@@ -121,6 +123,24 @@ class Registro(object):
 
     def __repr__(self):
         return '<%s.%s>' % (self.__class__.__module__, self.__class__.__name__)
+
+
+class RegistroAbertura(Registro):
+    def __init__(self, line=None):
+        super(RegistroAbertura, self).__init__(line)
+
+
+class RegistroEncerramento(Registro):
+    def __init__(self, line=None):
+        super(RegistroEncerramento, self).__init__(line)
+
+    @property
+    def _numero_linhas(self):
+        return self.QTD_LIN
+
+    @property
+    def _numero_linhas(self, value):
+        self.QTD_LIN = value
 
 
 class RegistroIndefinido(Registro):
