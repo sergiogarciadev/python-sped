@@ -129,6 +129,9 @@ class RegistroQ100(Registro):
 class RegistroQ200(Registro):
     """
     RESUMO MENSAL DO DEMONSTRATIVO DO RESULTADO DA ATIVIDADE RURAL
+
+    >>> r = RegistroQ200('Q200|112023|243981404|180135078|141085709|P|')
+    >>> r.as_line()
     """
     campos = [
         CampoFixo(1, 'REG', 'Q200'),

@@ -119,7 +119,8 @@ class Registro(object):
         return str(self)
 
     def __str__(self):
-        return '|'.join(self._valores)
+        valores = [self._valores[c._indice] for c in self.campos]
+        return '|'.join(valores)
 
     def __repr__(self):
         return '<%s.%s>' % (self.__class__.__module__, self.__class__.__name__)

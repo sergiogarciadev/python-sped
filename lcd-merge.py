@@ -22,16 +22,33 @@ arquivo1.readfile(fname1)
 arquivo2 = ArquivoDigital()
 arquivo2.readfile(fname2)
 
-for r in arquivo2._blocos['0'].registros:
+bloco0=[]
+
+for r in arquivo1._blocos['0'].registros:
+    if isinstance(r, ArquivoDigital.registros.Registro0000):
+        print(r.as_line())
+        bloco0.append(r)
+    if isinstance(r, ArquivoDigital.registros.Registro0010):
+        print(r.as_line())
+        bloco0.append(r)
+    if isinstance(r, ArquivoDigital.registros.Registro0030):
+        print(r.as_line())
+        bloco0.append(r)
+
+for r in (arquivo1._blocos['0'].registros + arquivo2._blocos['0'].registros):
     if isinstance(r, ArquivoDigital.registros.Registro0040):
         print(r.as_line())
-        arquivo1._blocos['0'].add(r)
+        bloco0.append(r)
     if isinstance(r, ArquivoDigital.registros.Registro0045):
         print(r.as_line())
-        arquivo1._blocos['0'].add(r)
+        bloco0.append(r)
+
+for r in (arquivo1._blocos['0'].registros + arquivo2._blocos['0'].registros):
     if isinstance(r, ArquivoDigital.registros.Registro0050):
         print(r.as_line())
-        arquivo1._blocos['0'].add(r)
+        bloco0.append(r)
+
+arquivo1._blocos['0']._registros = bloco0
 
 #
 # Mesclar registro Q100 dos dois arquivos
@@ -63,12 +80,13 @@ for regQ100 in regsQ100:
         #
         regQ200 = arquivo1.registros.RegistroQ200()
         regQ200.MÊS = f'{ultima_data.month:02}{ultima_data.year:04}'
-        arquivo1._blocos['Q'].add(regQ200)
-
         regQ200.VL_ENTRADA = entradas_mes
         regQ200.VL_SAIDA = saidas_mes
         regQ200.SLD_FIN = abs(saldo)
         regQ200.NAT_SLD_FIN = 'P' if saldo >= 0 else 'N'
+        
+        arquivo1._blocos['Q'].add(regQ200)
+        print(regQ200.as_line())
 
         entradas_mes = 0
         saidas_mes = 0
